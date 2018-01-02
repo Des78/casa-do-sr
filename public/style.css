@@ -1,0 +1,93 @@
+/* styles */
+/* called by your view template */
+
+body {
+  /* inherited from https://www.w3schools.com/w3css/4/w3.css
+  font-family:Verdana,sans-serif;
+  font-size:15px;
+  line-height:1.5;
+  margin:auto;
+  */
+  max-width:1600px;
+  color:#000;
+  background-color:#f1f1f1;
+}
+
+main, section {
+  /* from w3.css w3-padding-large */
+  padding:12px 24px;
+}
+
+a {
+  color:#247;
+  text-decoration: none;
+}
+a:hover {
+  color:#607d8b;
+  text-decoration: underline;
+}
+
+input {
+  /* from w3.css w3-input */
+  padding:8px;border:none;border-bottom:1px solid #ccc;
+  vertical-align:middle;
+}
+
+button, input[type="submit"], input[type="button"] {
+  /* from w3.css w3-button */
+  border:none;display:inline-block;outline:0;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap;
+  /* from w3.css w3-blue-grey */
+  color:#fff!important;background-color:#607d8b!important;
+  /* from w3.css w3-ripple */
+  transition:opacity 0.1s;
+}
+button:hover, input[type="submit"]:hover, input[type="button"]:hover{
+  /* from w3.css w3-button */
+  color:#003!important;background-color:#bbc!important
+}
+button:active, input[type="submit"]:active, input[type="button"]:active{
+  /* from w3.css w3-ripple */
+  opacity:0.5;
+}
+button:disabled, input[type="submit"]:disabled, input[type="button"]:disabled {
+  /* from w3.css w3-button */
+  cursor:not-allowed;opacity:0.3;
+}
+
+.error-text {
+  color: #A20;
+}
+
+.breadcrum {
+  background-color: #CDE;
+  margin:0;
+  padding: 8px;
+}
+
+/*
+* {
+  box-sizing: border-box;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+p {
+  max-width: 600px;
+}
+
+footer {
+  margin-top: 50px;
+  padding-top: 25px;
+  border-top: 1px solid lightgrey;
+}
+
+footer > a {
+  color: #BBBBBB;
+}
+
+.nicejob {
+  text-decoration: line-through;
+}
+*/

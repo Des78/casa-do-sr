@@ -4,40 +4,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Multiple IFTTT Triggers with a button</title>
+    <title>Home automation test</title>
     <meta name="description" content="Trigger multiple services with IFTTT">
     <link id="favicon" rel="icon" href="https://glitch.com/favicon-app.ico" type="image/x-icon">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/w3.css">
     <link rel="stylesheet" href="/style.css">
   </head>
+ 
   <body>
     <header>
-      <h1>
-        Multiple IFTTT Triggers via button click
-      </h1>
+      <h2 class="breadcrum">Casa do Sr.</h2>
     </header>
     <section>
-      <p>Light Switches</p>
-      <button onclick="turnLightsOn()">All Lights ON</button>
-      <button onclick="turnLightsOff()">All Lights OFF</button>
+      <form action="/ifttt" method="POST" >
+        <span>IFTTT simulate trigger:</span>
+      <input type="hidden" name="showResults" value="true">
+      <input list="triggers" name="trigger">
+      <datalist id="triggers">
+        {{#iftttEvents}}
+        <option value="{{.}}">
+        {{/iftttEvents}}
+      </datalist>
+      <input type="submit">
+    </form>
     </section>
-    <section>
-      <p>IFTTT Test trigger button</p>
-      <button onclick="triggerTest()">Trigger IFTTT Test</button>
-    </section>
-
-    
     
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>
     <script src="/client.js"></script>
-<!--
-    <script src="https://button.glitch.me/button.js" data-style="glitch"></script>
-    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
--->
+
   </body>
 </html>

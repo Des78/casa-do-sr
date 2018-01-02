@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="Casa do Sr. - Request Status page">
+      <link rel="stylesheet" href="/w3.css">
+      <link rel="stylesheet" href="/style.css">
+      <title>Result Messages</title>
+   </head>
+   <body>
+        <header>
+            <h3 class="breadcrum">
+                <a href="/">Casa do Sr.</a> > Result Messages
+            </h3>
+        </header>     
+        <main>
+            <h4 {{#isError}}class="error-text"{{/isError}}>{{resultSummary}}</h4>
+        </main>
+        <section>
+            {{#errorDetails}}
+            {{errorCode}} {{errorDetails.error}}<br>
+            {{errorDetails.error_description}}
+            {{/errorDetails}}
+        </section>
+        <section>
+            {{#resultMessages}}
+            <li>{{.}}</li>
+            {{/resultMessages}}            
+        </section>
+        <section>
+            <a href="{{returnLink}}"><button>{{returnMessage}}</button></a>
+        </section>
+    </body>
+</html>

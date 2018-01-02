@@ -1,0 +1,39 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="Server-side authorization for Dropbox example">
+      <link rel="stylesheet" href="/w3.css">
+      <link rel="stylesheet" type="text/css" href="/style.css">
+      <title>dropbox-auth</title>
+   </head>
+   <body>
+      <header>
+          <h3 class="breadcrum">
+            <a href="/">Casa do Sr.</a> > Dropbox authorization
+          </h3>
+      </header>     
+      <main>
+        <p>The configuration of the IFTTT triggers and devices/events is done via an excel file in dropbox.</p>
+        <p>This application requires an authorization code from the target Dropbox account.</p>
+        <p>The Excel config file will be stored in a private dropbox Apps folder, the application won't have access to any personal folder on the dropbox account.</p>
+      </main>
+      <section>
+        <p>1. Sign in with your Dropbox account to get the authorization code</p>
+        <p><a href="/dropbox/getAuth" target="dropboxWindow"><button>Sign in with Dropbox</button></a></p>
+        <br>
+        <p>2. Enter the authorization code here</p>
+        <form action="/dropbox/createLink" method="post">
+          <input name="code" type="text" placeholder="Code">
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+   </body>
+</html>
+
+
