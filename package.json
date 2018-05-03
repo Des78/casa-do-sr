@@ -7,14 +7,24 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
-    "consolidate": "^0.15.0",
+    "combined-stream": "^1.0.6",
+    "consolidate": "^0.15.1",
     "cookie-session": "^2.0.0-beta.3",
+    "depd": "^1.1.2",
     "dotenv": "^4.0.0",
     "dropbox": "^2.5.13",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
+    "form-data": "^2.3.2",
+    "hoek": "^5.0.3",
+    "http-errors": "^1.6.3",
+    "mime-types": "^2.1.18",
     "mustache": "^2.3.0",
-    "request": "^2.83.0"
+    "node-persist": "^2.1.0",
+    "request": "^2.85.0",
+    "safe-buffer": "^5.1.2",
+    "type-is": "^1.6.16"
   },
   "engines": {
     "node": "6.9.1"
@@ -24,5 +34,9 @@
     "express",
     "ifttt"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Des78/casa-do-sr"
+  }
 }
