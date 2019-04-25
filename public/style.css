@@ -54,6 +54,28 @@ button:disabled, input[type="submit"]:disabled, input[type="button"]:disabled {
   cursor:not-allowed;opacity:0.3;
 }
 
+select {
+  /* from w3.css w3-select */
+  padding:9px 0;border:none;border-bottom:1px solid #ccc;
+  vertical-align:middle;
+
+}
+
+/* from w3.css w3-ul */
+ul {list-style-type:none;padding:0;margin:0}
+li{padding:8px 16px;border-bottom:1px solid #ddd}
+li:last-child{border-bottom:none}
+
+/* from w3.css w3-table */
+table{border-collapse:collapse;border-spacing:0;width:100%;display:table}
+tr{border-bottom:1px solid #ddd}
+tr:nth-child(even){background-color:#f1f1f1}
+tr:nth-child(odd){background-color:#fff}
+tbody tr:not(:first-child):hover,li:hover{background-color:#ccc}
+td,th{padding:8px 8px;display:table-cell;text-align:left;vertical-align:top}
+th:first-child,th:first-child,td:first-child{padding-left:16px}
+
+
 .error-text {
   color: #A20;
 }

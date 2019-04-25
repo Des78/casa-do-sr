@@ -1,0 +1,84 @@
+{
+  "isEnabled": true,
+  "iftttMakerUrl": "https://maker.ifttt.com/use/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "things": [
+    { "name": "Plug01", "group": "Office 1", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "MainPc", "group": "Office 1", "_type": "ToogleThing" },
+    { "name": "ShutterOffice01", "group": "Office 1", "_type": "ProgressiveThing" },
+    { "name": "ShutterOffice02", "group": "Office 2", "_type": "ProgressiveThing", "executionSecs": 20 },
+    { "name": "Light01", "group": "Living Room", "_type": "ToogleThing" },
+
+    { "name": "Sun", "group": "World", "defaultState": "on", "_type": "ToogleThing" },
+    { "name": "SilentTime", "group": "Home", "_type": "ToogleThing" },
+    { "name": "MasterPresent", "group": "Home", "_type": "ToogleThing" },
+    { "name": "MiladyPresent", "group": "Home", "_type": "ToogleThing" }   
+  ],
+  "rules": [
+    { 
+      "name": "LightsOn",
+      "conditions": [
+        { "type": "Event", "name": "LightsOn" }
+      ],
+      "actions": [
+        { "type": "ifttt", "triggerEvent": "plug01_on" },
+        { "type": "ifttt", "triggerEvent": "light01_on" }
+      ]
+    },
+    { 
+      "name": "Shutdown",
+      "conditions": [
+        { "type": "Event", "name": "LightsOut", 
+            "orCondition": { "type": "Time", "from": "3:00", "to": "3:10" } 
+        }
+      ],
+      "actions": [
+        { "type": "ifttt", "triggerEvent": "plug01_off" },
+        { "type": "ifttt", "triggerEvent": "light01_off" },
+        { "type": "ifttt", "triggerEvent": "shutter01_up_off" },
+        { "type": "ifttt", "triggerEvent": "shutter01_down_off" },
+        { "type": "ifttt", "triggerEvent": "shutter02_up_off" },
+        { "type": "ifttt", "triggerEvent": "shutter02_down_off" }
+      ]
+    },
+    { 
+      "name": "SilentTime",
+      "conditions": [
+        { "type": "Time", "from": "23:00", "to": "8:15" },
+        { "type": "State", "thing": "SilentTime", "state": "off" }
+      ],
+      "actions": [
+        { "type": "ChangeState", "thing": "SilentTime", "state": "on" }        
+      ]
+    },
+    { 
+      "name": "NoisyTime",
+      "conditions": [
+        { "type": "Time", "from": "8:15", "to": "23:00" },
+        { "type": "State", "thing": "SilentTime", "state": "on" }
+      ],
+      "actions": [
+        { "type": "ChangeState", "thing": "SilentTime", "state": "off" }        
+      ]
+    },
+    { 
+      "name": "EveningAmbience",
+      "conditions": [
+        { "type": "Time", "from": "19:00", "to": "1:00" },
+        { "type": "State", "thing": "Sun", "state": "off" },
+        { "type": "State", "thing": "Light01", "state": "off" }
+      ],
+      "actions": [
+        { "type": "ChangeState", "thing": "Light01", "state": "on" },
+        { "type": "ifttt", "triggerEvent": "shutter01_down_on" },
+        { "type": "sleep", "seconds": 25 },
+        { "type": "ifttt", "triggerEvent": "shutter01_down_off" },
+        { "type": "ifttt", "triggerEvent": "shutter02_down_on" },
+        { "type": "sleep", "seconds": 25 },
+        { "type": "ifttt", "triggerEvent": "shutter02_down_off" }
+      ]
+    }
+  ]
+
+
+
+}

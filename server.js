@@ -7,12 +7,14 @@ const bodyParser = require('body-parser');
 const engines  = require('consolidate');
 const request = require('request');
 const cookieSession = require('cookie-session');
-var app = express();
+const envConfig = require('dotenv').config();
+const app = express();
 
 // set view engine
 app.use(express.static('public'));
 app.set('views', __dirname + '/views');
 app.engine('html', engines.mustache);
+app.engine('mustache', engines.mustache);
 app.set('view engine', 'html');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,7 +25,7 @@ app.use(cookieSession({
   secret: 'sr-dropbox-auth-secret',
   maxAge: 30 * 24 * 60 * 60 * 1000 // 1 month
 }));
-
+/*
 // Redirect to /dropbox/auth if token doesn't exist
 app.use((req, res, next) => {
   console.log('request path: ' + req.path);
@@ -43,13 +45,20 @@ app.use((req, res, next) => {
     }
   }
 });
-
+*/
 require('./routes')(app);
 
+// initialize DB
+require('./services/persistenceManager')
+
+
+//require('./_tester').createTestData();
+//require('./_tester').testObjModel();
+
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
-});
+   const listener = app.listen(process.env.PORT, function () {
+     console.log('Your app is listening on port ' + listener.address().port);
+   });
 
 
 

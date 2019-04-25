@@ -18,6 +18,18 @@
       <h2 class="breadcrum">Casa do Sr.</h2>
     </header>
     <section>
+      <select onchange="showUserThings(this.value)">
+        {{#usersData}}
+        <option value="{{key}}">{{name}}</option>
+        {{/usersData}}
+      </select>
+      <div id="thingsList" style="margin: 10px 0px">
+      </div>
+      <input type="submit">
+    </section>
+
+    <!-- 
+    <section>
       <form action="/ifttt" method="POST" >
         <span>IFTTT simulate trigger:</span>
       <input type="hidden" name="showResults" value="true">
@@ -30,6 +42,7 @@
       <input type="submit">
     </form>
     </section>
+    -->
     
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
