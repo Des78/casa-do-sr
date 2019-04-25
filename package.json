@@ -7,24 +7,25 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "bcrypt": "^1.0.3",
-    "body-parser": "^1.18.2",
-    "combined-stream": "^1.0.6",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.18.3",
+    "combined-stream": "^1.0.7",
     "consolidate": "^0.15.1",
     "cookie-session": "^2.0.0-beta.3",
     "depd": "^1.1.2",
     "dotenv": "^4.0.0",
     "dropbox": "^2.5.13",
-    "express": "^4.16.3",
-    "form-data": "^2.3.2",
-    "hoek": "^5.0.3",
-    "http-errors": "^1.6.3",
-    "mime-types": "^2.1.18",
-    "mustache": "^2.3.0",
+    "express": "^4.16.4",
+    "form-data": "^2.3.3",
+    "hoek": "^5.0.4",
+    "http-errors": "^1.7.2",
+    "mime-types": "^2.1.24",
+    "mustache": "^2.3.2",
     "node-persist": "^2.1.0",
-    "request": "^2.85.0",
+    "npm": "^6.9.0",
+    "request": "^2.88.0",
     "safe-buffer": "^5.1.2",
-    "type-is": "^1.6.16"
+    "type-is": "^1.6.17"
   },
   "engines": {
     "node": "6.9.1"
