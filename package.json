@@ -16,6 +16,7 @@
     "dotenv": "^4.0.0",
     "dropbox": "^2.5.13",
     "express": "^4.16.4",
+    "extend": "^3.0.2",
     "form-data": "^2.3.3",
     "hoek": "^5.0.4",
     "http-errors": "^1.7.2",
