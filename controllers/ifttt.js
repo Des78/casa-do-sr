@@ -20,10 +20,17 @@ exports.iftttRequest = (req, response) => {
   const showResultsPage = util.getParam(req, "showResults");
 
   let triggers = [trigger];
+  // Call IFTTT
   var resultObj = launchTriggerEvents(triggers, userKey);
   
   
-  // TODO: Change thing state if passed as parameter? instead of state to be propagated from IFTTT (doesn't work most times when the state change is triggered from ifttt)
+  // Change thing state if passed as parameter, instead of waiting for state to be propagated from IFTTT (doesn't work most times when the state change is triggered from ifttt)
+  setTimeout(function(resultObj) { 
+    if (thingName && newState && (resultObj.errorCode === 0 || resultObj.errorCode === 200)) {
+      const stateMgr = require('../services/stateManager');
+      stateMgr.changeState(thingName, newState, userKey, false);
+    }
+  }, resultObj.isAsync? 3000: 0, resultObj);
 
 
   if (showResultsPage)

@@ -6,9 +6,9 @@ exports.list = (req, res) => {
   var tplData = {};
 
   const util = require('../services/utilities');
-  const userKey = util.getParam(req, "user")
-
-  const persistMgr = require('../services/persistenceManager')
+  const userKey = util.getParam(req, "user");
+  
+  const persistMgr = require('../services/persistenceManager');
 
   tplData.things = persistMgr.getUserThings(userKey);
 

@@ -1,42 +1,76 @@
 
 
-exports.changeState = (req, res) => {
-    let statusCode = 200;
-    let statusMsg = "OK";
-
+exports.changeStateRequest = (req, res) => {
     const util = require('../services/utilities');   
     const thingName = util.getParam(req, "thing");
     const newState = util.getParam(req, "state");
-    const userKey =util. getParam(req, "key");
+    const userKey = util.getParam(req, "key");
+    const isConfirmed = util.getParam(req, "isConfirmed");
 
-    console.log("ChangeState params: " + thingName + " " + newState + " " + userKey);
-    // console.log("Post: " + req.body);
-    // console.log(req.body);
-    // console.log("URL: " + req.params);
-    // console.log(req.params);
-    // console.log("Query: " + req.query);
-    // console.log(req.query);
+    let resultObj = changeState(thingName, newState, userKey, isConfirmed);
 
+
+    if (process.env.FWD_URL) {
+        // forward request to secondary server
+        const requester = require('request');
+        requester(process.env.FWD_URL + "/ping", function (error, response, body) {
+          if (response && response.statusCode === 200) 
+          {
+            console.log("Forwarding to " + process.env.FWD_URL);
+            requester(process.env.FWD_URL + "/ChangeState/"+thingName+"/"+newState+"/"+userKey);
+          }
+          else 
+          {
+            console.log("Secondary host " + process.env.FWD_URL + " ping service failed: \n" + (response? response.statusCode: error));
+          }
+        });
+  
+    }
+
+
+    //res.sendStatus(resultObj.errorCode);
+    res.status(resultObj.errorCode).send(resultObj.resultSummary);
+  };
+
+
+exports.changeState = changeState;
+function changeState(thingName, newState, userKey, isConfirmed) {
+
+    var resultObj = {
+        resultSummary :"OK",
+        resultMessages : [],
+        isError: false,
+        errorCode : 200,
+        errorDetails : null,
+        returnMessage : "Back",
+        returnLink : "/",
+        isAsync: false
+      };
+
+    console.log("ChangeState: " + thingName + " " + newState + (isConfirmed? "(confirmed) " : " ") + userKey);
+      
     if (userKey) {
         const persistMgr = require('../services/persistenceManager');
         let thing = persistMgr.getThing(thingName, userKey);
         if (thing) {
             thing.state = newState;
+            // TODO: add stateConfirmation (or state source?) to Thing object
+            //thing.stateConfirmation = isConfirmed? "Confirmed" : "Unconfirmed";
             persistMgr.saveThing(thing, userKey);
-
-            statusMsg = thingName + " state changed to " + newState;
+            resultObj.resultSummary = thingName + " state changed to " + newState;
         }
         else {
-            statusCode = 400;
-            statusMsg = "could not find " + thingName + " for user key"
+            resultObj.errorCode = 400;
+            resultObj.resultSummary = "could not find " + thingName + " for user key";
+            resultObj.isError = true;
         }
     }
     else {
-        statusCode = 401;
-        statusMsg = "user key not provided";
+        resultObj.errorCode = 401;
+        resultObj.resultSummary = "user key not provided";
+        resultObj.isError = true;
     }
 
-    //res.sendStatus(statusCode);
-    res.status(statusCode).send(statusMsg);
-  };
+    return resultObj;
+}
 

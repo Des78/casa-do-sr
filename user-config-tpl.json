@@ -1,12 +1,14 @@
 {
   "isEnabled": true,
-  "iftttMakerUrl": "https://maker.ifttt.com/use/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "iftttMakerUrl": "https://maker.ifttt.com/use/pSTEgWGQzFNhwGTyntMXHYeasfS2HcsCk8zLwU2C203",
   "things": [
     { "name": "Plug01", "group": "Office 1", "iftttConnected":true, "_type": "ToogleThing" },
     { "name": "MainPc", "group": "Office 1", "_type": "ToogleThing" },
     { "name": "ShutterOffice01", "group": "Office 1", "_type": "ProgressiveThing" },
     { "name": "ShutterOffice02", "group": "Office 2", "_type": "ProgressiveThing", "executionSecs": 20 },
+    { "name": "OfficeD-Dn", "group": "Office 2", "iftttConnected":true, "_type": "ToogleThing" },
     { "name": "Light01", "group": "Living Room", "_type": "ToogleThing" },
+    
 
     { "name": "Sun", "group": "World", "defaultState": "on", "_type": "ToogleThing" },
     { "name": "SilentTime", "group": "Home", "_type": "ToogleThing" },
