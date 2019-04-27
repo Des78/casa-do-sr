@@ -132,14 +132,15 @@
 
     try {
         console.log("create user 1");
-        persistMgr.createUser("xpto@gmail.com", "google", "")
-        //persistMgr.createUser("des", "local", "xpto")
+        //persistMgr.createUser("xpto@gmail.com", "google", "")
+        persistMgr.createUser("des", "local", "xpto", "54h0ip1a0v073xm4g2rbqcse0d")
     }
     catch (err)
     {
         console.warn("ERROR: " + err);
         console.log("deleting user");
-        persistMgr.deleteUser("xpto@gmail.com")
+        //persistMgr.deleteUser("xpto@gmail.com")
+        persistMgr.deleteUser("des")
     }
     try {
         console.log("create user 2");

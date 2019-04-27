@@ -77,10 +77,12 @@ class PersistenceManager {
     }
     
     getThing(thingName, userKey) {
-        let thing = {};        
-        let thingData = userDb[userKey].getItemSync(thingName);
-        if (thingData) {
-            thing = ThingFactory.createInstance(thingData, userKey)
+        let thing = {};
+        if (userDb[userKey]) {
+            let thingData = userDb[userKey].getItemSync(thingName);
+            if (thingData) {
+                thing = ThingFactory.createInstance(thingData, userKey)
+            }
         }
 
         return thing;
@@ -92,10 +94,10 @@ class PersistenceManager {
 
 
 
-    createUser(userName, type, pass) {
+    createUser(userName, type, pass, key) {
         if (!this._getUserDataByName(userName)) {
             // update user list
-            const userData = {name: userName, type: type, hash: hashAndSalt(pass), key: generateKey()};
+            const userData = {name: userName, type: type, hash: hashAndSalt(pass), key: (key? key: generateKey())};
             users.push(userData);
             presistLib.setItemSync("userList", users);
             // initialize user data storage
