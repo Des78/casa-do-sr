@@ -40,7 +40,7 @@ exports.iftttRequest = (req, response) => {
     // Automatic trigger - no need to return anything
     //response.end();  
     //res.sendStatus(statusCode);
-    res.status(resultObj.errorCode).send(resultObj.resultSummary);
+    response.status(resultObj.errorCode).send(resultObj.resultSummary);
  }
 
 

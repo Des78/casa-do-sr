@@ -12,17 +12,10 @@ const ifttt = require('./ifttt');
       var tplData = {};
 
       const persistMgr = require('../services/persistenceManager')
-      tplData.usersData = persistMgr.getUsersData();
-      tplData.usersData.unshift({});
+      tplData.usersData = persistMgr._getUsersData();
+      //add blank user
+      //tplData.usersData.unshift({});
 
-
-      /* OLD
-      tplData.iftttEvents = [];
-      let triggerEventMap = ifttt.getIftttConfig();
-      Object.keys(triggerEventMap).forEach(function(key) {
-        tplData.iftttEvents.push(key);
-      });
-      // */
 
       // show main page
       res.render('index.html', tplData);

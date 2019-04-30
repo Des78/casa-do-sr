@@ -18,14 +18,13 @@
       <h2 class="breadcrum">Casa do Sr.</h2>
     </header>
     <section>
-      <select onchange="showUserThings(this.value)">
+      <select id="userList" onchange="showUserThings(this.value);" ondblclick="onchange();">
         {{#usersData}}
         <option value="{{key}}">{{name}}</option>
         {{/usersData}}
       </select>
       <div id="thingsList" style="margin: 10px 0px">
       </div>
-      <input type="submit">
     </section>
 
     <!-- 
