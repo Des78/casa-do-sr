@@ -25,9 +25,6 @@ module.exports = class ToogleThing extends Thing {
 
     // Create a new object instance, based on persisted object data (with properties only)
   static createInstance(dbObjData, userKey) {
-    return new ToogleThing(dbObjData.name, dbObjData.group, 
-      (dbObjData.initialState? dbObjData.initialState: dbObjData._state), 
-      (dbObjData.defaultState? dbObjData.defaultState: dbObjData._defaultState),
-      dbObjData.iftttConnected, userKey);
+    return new ToogleThing(dbObjData, userKey);
   }
 }

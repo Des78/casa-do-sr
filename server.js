@@ -52,13 +52,13 @@ require('./routes')(app);
 require('./services/persistenceManager')
 
 
-//require('./_tester').createTestData();
+//require('./_tester').createTestData(); /*
 //require('./_tester').testObjModel();
-// /*
+
 // listen for requests :)
-   const listener = app.listen(process.env.PORT, function () {
-     console.log('Your app is listening on port ' + listener.address().port);
-   });
+const listener = app.listen(process.env.PORT, function () {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
 
 
 // */

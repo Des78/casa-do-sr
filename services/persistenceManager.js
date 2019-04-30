@@ -20,23 +20,25 @@ class PersistenceManager {
 
       users.forEach(function(userData) {
             // initialize user data storage
-            userDb[userData.key] = presistLib.create({dir: ".data/userData/"+userData.key});
-            userDb[userData.key].initSync();
+            if (userData) {
+                userDb[userData.key] = presistLib.create({dir: ".data/userData/"+userData.key});
+                userDb[userData.key].initSync();
 
-            PersistenceManager.instance.syncUserObjectsConfig(userData.key);
+                PersistenceManager.instance.syncUserObjectsConfig(userData.key);
+            }
         });
     
       return PersistenceManager.instance;
     }
 
     // TODO: Remove method - usersData should not be exposed, for test/debug only
-    getUsersData() {
+    _getUsersData() {
         return users;
     }
 
     // private (guideline only) method
     _getUserDataByName(userName) {
-        let idx = users.findIndex(userData => userData.name === userName);
+        let idx = users.findIndex(userData => userData && userData.name === userName);
         return (idx >= 0)? users[idx] : null;
     }
 
@@ -116,15 +118,20 @@ class PersistenceManager {
         const userData = this._getUserDataByName(userName);
         if (userData) {
             // delete user data storage
-            const dir = userDb[userData.key].options.dir;
-            userDb[userData.key].clearSync();
-            delete userDb[userData.key];
+            if (userDb[userData.key]) {
+                const dir = userDb[userData.key].options.dir;
+                userDb[userData.key].clearSync();
+                delete userDb[userData.key];
+
+                // detele empty user folder
+                const fs = require('fs');
+                fs.rmdirSync(dir);
+            }
             // update users list
-            users.splice(users.indexOf(userData), 1);
+            users = users.filter(u => u !== userData);
+            //users.splice(users.indexOf(userData), 1);
+            //delete users[users.indexOf(userData)];
             presistLib.setItemSync("userList", users);
-            // detele empty user folder
-            const fs = require('fs');
-            fs.rmdirSync(dir);
         }
         else
             throw("User '" + userName + "' not found");
@@ -149,43 +156,54 @@ class PersistenceManager {
         // get user settings 
         const settingsKey = "settings_"+userKey;
         const userSettings = userDb[userKey].getItemSync(settingsKey);
-        // compare items from the user config with the runtime object db
-        userSettings.things.forEach(thingCfg => {
-            let thingData = userDb[userKey].getItemSync(thingCfg.name);
-            if (thingData) {
-                // Thing already exists, check if it needs to be updated
-                let oldThing = ThingFactory.createInstance(thingData, userKey);
-                let newThing = ThingFactory.createInstance(thingCfg, userKey);
-                let mergeRes = oldThing.merge(newThing);
-                if (mergeRes > 0){
-                    // save updated thing
-                    userDb[userKey].setItemSync(oldThing.name, oldThing);
+        if (userSettings) {
+            // compare items from the user config with the runtime object db
+            userSettings.things.forEach(thingCfg => {
+                let thingData = userDb[userKey].getItemSync(thingCfg.name);
+                if (thingData) {
+                    // Thing already exists, check if it needs to be updated
+                    let oldThing = null;
+                    try {
+                        oldThing = ThingFactory.createInstance(thingData, userKey);
+                    }
+                    catch (err) {
+                        console.error("Error loading " + thingData.Name + " from DB: " + err);
+                        console.log("Recreating " + thingData.Name + " from config.");
+                    }
+                    if (oldThing) {
+                        let newThing = ThingFactory.createInstance(thingCfg, userKey);
+                        let mergeRes = oldThing.merge(newThing);
+                        if (mergeRes > 0){
+                            // save updated thing
+                            userDb[userKey].setItemSync(oldThing.name, oldThing);
+                        }
+                        else if (mergeRes < 0) {
+                            // thing could not be updated, clear it to be re-created
+                            thingData = null;
+                        }
+                    }
                 }
-                else if (mergeRes < 0) {
-                    // thing could not be updated, clear it to be re-created
-                    thingData = null;
+
+                if (!thingData) {
+                    // create new Thing
+                    let thing = ThingFactory.createInstance(thingCfg, userKey);
+                    thing.reset();
+                    userDb[userKey].setItemSync(thing.name, thing);
                 }
-            }
+            })
 
-            if (!thingData) {
-                // create new Thing
-                let thing = ThingFactory.createInstance(thingCfg, userKey);
-                thing.reset();
-                userDb[userKey].setItemSync(thing.name, thing);
-            }
-        })
-
-        // Check for deleted things
-        let thingsToRemove = [];
-        userDb[userKey].keys().forEach(storedThingName => {
-            if (storedThingName != settingsKey && userSettings.things.findIndex(thing => thing.name === storedThingName) < 0) {
-                // Thing deleted, remove it from storage
-                thingsToRemove.push(storedThingName);
-            }
-        });
-        thingsToRemove.forEach(storedThingName => {
-            userDb[userKey].removeItem(storedThingName);
-        });
+            // Check for deleted things
+            let thingsToRemove = [];
+            userDb[userKey].keys().forEach(storedThingName => {
+                if (storedThingName != settingsKey && userSettings.things.findIndex(thing => thing.name === storedThingName) < 0) {
+                    // Thing deleted, remove it from storage
+                    thingsToRemove.push(storedThingName);
+                }
+            });
+            thingsToRemove.forEach(storedThingName => {
+                userDb[userKey].removeItem(storedThingName);
+            });
+        }
     }
 
   }

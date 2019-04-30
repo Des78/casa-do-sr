@@ -11,10 +11,11 @@ exports.list = (req, res) => {
   const persistMgr = require('../services/persistenceManager');
 
   tplData.things = persistMgr.getUserThings(userKey);
+  tplData.partials = { thingStateControl: 'thingStateControl' };
 
 
   // show things list
-  res.render('things.mustache', tplData);
+  res.render('thingsGrid.mustache', tplData);
 
 };
 

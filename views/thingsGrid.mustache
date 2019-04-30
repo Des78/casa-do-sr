@@ -1,0 +1,18 @@
+<table style="width: auto">
+    <!-- <tr>
+        <th>Name</th>
+        < !-- <th>Type</th> -- >
+        < !-- <th>Group</th> -- >
+        <th>State</th>
+    </tr> -->
+    {{#things}}
+    <tr>
+        <td>{{name}}</td>
+        <!-- <td>{{_type}}</td> -->
+        <!-- <td>{{group}}</td> -->
+        <td>
+        {{> thingStateControl}}
+        </td>
+    </tr>
+    {{/things}}
+</table>

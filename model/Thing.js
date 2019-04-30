@@ -4,14 +4,16 @@
 
 module.exports = class Thing {
 
-  constructor(name, group, initialState, defaultState, iftttConnected, userKey) {
-      this.name = name;
-      this.group = group;
-      this.state = initialState;
-      this.iftttConnected = iftttConnected;
-      this._ownerKey = userKey;
-      this._defaultState = defaultState;
+  constructor(thingData, userKey) {
+      this.name = thingData.name;
+      this.group = thingData.group;
+      this.state = thingData.initialState? thingData.initialState: thingData._state;
+      this._defaultState = thingData.defaultState? thingData.defaultState: thingData._defaultState;
+      this.stateSource = thingData.stateSource? thingData.stateSource: "unknown";
+      this.iftttConnected = thingData.iftttConnected;
       this._type = this.constructor.name;
+
+      this._ownerKey = userKey;
     }
 
     get posibleStates()  { return []; }
@@ -59,9 +61,6 @@ module.exports = class Thing {
 
     // Create a new object instance, based on persisted object data (with properties only)
     static createInstance(dbObjData, userKey) {
-      return new Thing(dbObjData.name, dbObjData.group, 
-        (dbObjData.initialState? dbObjData.initialState: dbObjData._state), 
-        (dbObjData.defaultState? dbObjData.defaultState: dbObjData._defaultState),
-        dbObjData.iftttConnected, userKey);
+      return new Thing(dbObjData, userKey);
     }
 }

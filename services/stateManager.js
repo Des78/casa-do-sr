@@ -5,9 +5,9 @@ exports.changeStateRequest = (req, res) => {
     const thingName = util.getParam(req, "thing");
     const newState = util.getParam(req, "state");
     const userKey = util.getParam(req, "key");
-    const isConfirmed = util.getParam(req, "isConfirmed");
+    const stateSource = util.getParam(req, "source");
 
-    let resultObj = changeState(thingName, newState, userKey, isConfirmed);
+    let resultObj = changeState(thingName, newState, userKey, stateSource);
 
 
     if (process.env.FWD_URL) {
@@ -17,7 +17,22 @@ exports.changeStateRequest = (req, res) => {
           if (response && response.statusCode === 200) 
           {
             console.log("Forwarding to " + process.env.FWD_URL);
-            requester(process.env.FWD_URL + "/ChangeState/"+thingName+"/"+newState+"/"+userKey);
+            let postData = {
+                thing: thingName,
+                state: newState,
+                key: userKey,
+                source: stateSource
+            };
+
+            let reqOptions = {
+              method: 'post',
+              body: postData,
+              json: true,
+              url: process.env.FWD_URL + "/ChangeState"
+            };
+
+            requester(reqOptions);
+            //requester(process.env.FWD_URL + "/ChangeState/"+thingName+"/"+newState+"/"+userKey);
           }
           else 
           {
@@ -34,7 +49,7 @@ exports.changeStateRequest = (req, res) => {
 
 
 exports.changeState = changeState;
-function changeState(thingName, newState, userKey, isConfirmed) {
+function changeState(thingName, newState, userKey, stateSource) {
 
     var resultObj = {
         resultSummary :"OK",
@@ -47,15 +62,14 @@ function changeState(thingName, newState, userKey, isConfirmed) {
         isAsync: false
       };
 
-    console.log("ChangeState: " + thingName + " " + newState + (isConfirmed? "(confirmed) " : " ") + userKey);
+    console.log("ChangeState: " + thingName + " " + newState + "(" + stateSource + ") " + userKey);
       
     if (userKey) {
         const persistMgr = require('../services/persistenceManager');
         let thing = persistMgr.getThing(thingName, userKey);
         if (thing) {
             thing.state = newState;
-            // TODO: add stateConfirmation (or state source?) to Thing object
-            //thing.stateConfirmation = isConfirmed? "Confirmed" : "Unconfirmed";
+            thing.stateSource = stateSource? stateSource: "unknown";
             persistMgr.saveThing(thing, userKey);
             resultObj.resultSummary = thingName + " state changed to " + newState;
         }

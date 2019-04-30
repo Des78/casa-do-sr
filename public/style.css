@@ -75,6 +75,9 @@ tbody tr:not(:first-child):hover,li:hover{background-color:#ccc}
 td,th{padding:8px 8px;display:table-cell;text-align:left;vertical-align:top}
 th:first-child,th:first-child,td:first-child{padding-left:16px}
 
+/* avoid line breaks on Forms */ 
+form { display:inline; margin:0; padding:0; }
+
 
 .error-text {
   color: #A20;

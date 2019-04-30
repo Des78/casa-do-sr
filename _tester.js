@@ -131,20 +131,34 @@
     const persistMgr = require('./services/persistenceManager')
 
     try {
+        console.log("deleting ALL users");
+        let users = persistMgr._getUsersData();
+        users.forEach(user => {
+            persistMgr.deleteUser(user.name)
+            console.log("deleted " + user.name);
+        });
+    }
+    catch (err)
+    {
+        console.warn(err);
+        //console.log("deleting user");
+    }
+
+    try {
         console.log("create user 1");
         //persistMgr.createUser("xpto@gmail.com", "google", "")
         persistMgr.createUser("des", "local", "xpto", "54h0ip1a0v073xm4g2rbqcse0d")
     }
     catch (err)
     {
-        console.warn("ERROR: " + err);
-        console.log("deleting user");
+        console.warn(err);
+        //console.log("deleting user");
         //persistMgr.deleteUser("xpto@gmail.com")
         persistMgr.deleteUser("des")
     }
     try {
-        console.log("create user 2");
-        persistMgr.createUser("ZeManel", "local", "ogandipaugandi")
+        //console.log("create user 2");
+        //persistMgr.createUser("ZeManel", "local", "ogandipaugandi")
     }
     catch (err)
     {
