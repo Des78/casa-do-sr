@@ -1,6 +1,22 @@
 /* styles */
 /* called by your view template */
 
+:root {
+  /* color theme variables */
+  --bg-color: #f0f1f2;
+  --bg-brighter-nuance-color: #fafbfc;
+  --bg-bright-nuance-color: #f5f6f7;
+  --bg-title1-color: #c6d6e0;
+  --bg-title2-color: #dae0e6;
+  --bg-butt-highlight-color: #abc;
+  --bg-button-color: #607d8b;
+  --border-color: var(--bg-title2-color);
+  --txt-color: #000;
+  --txt-link-color: #247;
+  --txt-highligh-color: var(--bg-button-color);
+  --err-color: #a20;
+}
+
 body {
   /* inherited from https://www.w3schools.com/w3css/4/w3.css
   font-family:Verdana,sans-serif;
@@ -9,8 +25,8 @@ body {
   margin:auto;
   */
   max-width:1600px;
-  color:#000;
-  background-color:#f1f1f1;
+  color: var(--txt-color);
+  background-color: var(--bg-color);
 }
 
 main, section {
@@ -19,17 +35,17 @@ main, section {
 }
 
 a {
-  color:#247;
+  color:var(--txt-link-color);
   text-decoration: none;
 }
 a:hover {
-  color:#607d8b;
+  color: var(--txt-highligh-color);
   text-decoration: underline;
 }
 
 input {
   /* from w3.css w3-input */
-  padding:8px;border:none;border-bottom:1px solid #ccc;
+  padding:8px;border:none;border-bottom:1px solid var(--border-color);
   vertical-align:middle;
 }
 
@@ -37,13 +53,13 @@ button, input[type="submit"], input[type="button"] {
   /* from w3.css w3-button */
   border:none;display:inline-block;outline:0;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap;
   /* from w3.css w3-blue-grey */
-  color:#fff!important;background-color:#607d8b!important;
+  color:var(--bg-color)!important;background-color:var(--bg-button-color)!important;
   /* from w3.css w3-ripple */
   transition:opacity 0.1s;
 }
 button:hover, input[type="submit"]:hover, input[type="button"]:hover{
   /* from w3.css w3-button */
-  color:#003!important;background-color:#bbc!important
+  color:var(--txt-color)!important;background-color:var(--bg-butt-highlight-color)!important
 }
 button:active, input[type="submit"]:active, input[type="button"]:active{
   /* from w3.css w3-ripple */
@@ -56,22 +72,24 @@ button:disabled, input[type="submit"]:disabled, input[type="button"]:disabled {
 
 select {
   /* from w3.css w3-select */
-  padding:9px 0;border:none;border-bottom:1px solid #ccc;
+  padding:9px 0;border:none;border-bottom:1px solid var(--border-color);
   vertical-align:middle;
 
 }
 
 /* from w3.css w3-ul */
 ul {list-style-type:none;padding:0;margin:0}
-li{padding:8px 16px;border-bottom:1px solid #ddd}
+li{padding:8px 16px;border-bottom:1px solid var(--border-color)}
+li:hover{background-color:var(--bg-brighter-nuance-color)}
 li:last-child{border-bottom:none}
 
 /* from w3.css w3-table */
 table{border-collapse:collapse;border-spacing:0;width:100%;display:table}
-tr{border-bottom:1px solid #ddd}
-tr:nth-child(even){background-color:#f1f1f1}
-tr:nth-child(odd){background-color:#fff}
-tbody tr:not(:first-child):hover,li:hover{background-color:#ccc}
+thead{border-bottom:2px solid var(--border-color)}
+tr{border-bottom:1px solid var(--border-color)}
+tr:nth-child(odd){background-color:var(--bg-brighter-nuance-color)}
+tr:nth-child(even){background-color:var(--bg-bright-nuance-color)}
+tbody tr:hover{background-color:var(--border-color)}
 td,th{padding:8px 8px;display:table-cell;text-align:left;vertical-align:top}
 th:first-child,th:first-child,td:first-child{padding-left:16px}
 
@@ -80,14 +98,48 @@ form { display:inline; margin:0; padding:0; }
 
 
 .error-text {
-  color: #A20;
+  color: var(--err-color);
 }
 
 .breadcrum {
-  background-color: #CDE;
+  background-color: var(--bg-title1-color);
   margin:0;
   padding: 8px;
 }
+
+.group-title {
+  background-color: var(--bg-title2-color);
+  font-size: 18px;
+  margin:0;
+  padding: 4px;
+}
+
+.things-section {
+  margin: 10px 0px;
+}
+.group-things-container {
+  margin-left: 40px;
+}
+.thing-container {
+  display: grid;
+  grid-template-columns: minmax(150px, auto) auto auto 1fr;
+  grid-template-areas: "name type group state";
+  grid-column-gap: 2px;
+    
+}
+.thing-name {
+  grid-area: name;
+}
+.thing-type {
+  grid-area: type;
+}
+.thing-group {
+  grid-area: group;
+}
+.thing-state {
+  grid-area: state;
+}
+
 
 /*
 * {

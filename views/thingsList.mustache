@@ -1,0 +1,12 @@
+<ul>
+{{#things}}
+<li>
+  <span class="thing-container">
+    <span class="thing-name">{{name}}</span>
+    <span class="thing-type">{{#showTypeHeader}}{{_type}}{{/showTypeHeader}}</span>
+    <span class="thing-group">{{#showGroupHeader}}{{group}}{{/showGroupHeader}}</span>
+    <span class="thing-state">{{> thingStateControl}}</span>
+  </span>
+</li>
+{{/things}}
+</ul>

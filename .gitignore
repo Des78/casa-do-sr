@@ -44,3 +44,4 @@ Thumbs.db
 # User config Files
 .env
 .data
+user-config-tpl.json

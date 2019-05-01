@@ -1,17 +1,21 @@
-<table style="width: auto">
-    <!-- <tr>
+<table class="group-things-container">
+    {{#showHeaders}}
+    <thead>
         <th>Name</th>
-        < !-- <th>Type</th> -- >
-        < !-- <th>Group</th> -- >
+        {{#showTypeHeader}}<th>Type</th>{{/showTypeHeader}}
+        {{#showGroupHeader}}<th>Group</th>{{/showGroupHeader}}
         <th>State</th>
-    </tr> -->
+    </thead>
+    {{/showHeaders}}
     {{#things}}
     <tr>
         <td>{{name}}</td>
-        <!-- <td>{{_type}}</td> -->
-        <!-- <td>{{group}}</td> -->
+        {{#showTypeHeader}}<td>{{_type}}</td>{{/showTypeHeader}}
+        {{#showGroupHeader}}<td>{{group}}</td>{{/showGroupHeader}}
         <td>
+        <span>
         {{> thingStateControl}}
+        </span>
         </td>
     </tr>
     {{/things}}

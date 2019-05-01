@@ -1,15 +1,17 @@
 
-        {{_state}}{{#progress}} - {{progress}}{{/progress}}
-        {{#iftttConnected}}
-            {{#nextState}}
-            <form id="iftttForm_{{name}}">
-                <input type="hidden" name="showResults" value="true">
-                <input type="hidden" name="trigger" value="{{name}}_{{.}}">
-                <input type="hidden" name="key" value="{{_ownerKey}}">
-                <input type="hidden" name="thing" value="{{name}}">
-                <input type="hidden" name="state" value="{{.}}">
-                <input type="reset" value="{{.}}" style="padding: 0px 6px" onclick="iftttSubmit('iftttForm_{{name}}');">
-            </form>
-            {{/nextState}}            
-        {{/iftttConnected}}
-        ({{stateSource}})
+        {{#nextState}}
+        <form id="iftttForm_{{name}}">
+            <input type="hidden" name="showResults" value="true">
+            <input type="hidden" name="trigger" value="{{name}}_{{.}}">
+            <input type="hidden" name="key" value="{{_ownerKey}}">
+            <input type="hidden" name="thing" value="{{name}}">
+            <input type="hidden" name="state" value="{{.}}">
+            
+            <!-- <input type="button" value="{{.}}" style="padding: 0px 6px" onclick="iftttSubmit('iftttForm_{{name}}');"> -->
+
+            <input class="tgl tgl-light" id="cb_{{name}}" type="checkbox" value="{{.}}" {{^isOff}} checked {{/isOff}} 
+            {{#iftttConnected}} onclick="iftttSubmit('iftttForm_{{name}}');" {{/iftttConnected}} />
+            <label class="tgl-btn" for="cb_{{name}}"></label>
+        </form>
+        {{/nextState}}       
+        <!-- ({{stateSource}}) -->
