@@ -15,21 +15,30 @@ function showUserThings(userKey)
   });
 }
 
-function iftttSubmit(formId){
+function iftttSubmit(formId, chkbox){
+  // disable button while request is being processed
+  chkbox.checked = !chkbox.checked;
+  chkbox.disabled = true;
   $.post({
       url:'/ifttt',
       type:'post',
       data:$('#'+formId).serialize(),
       success:function(result){
-          //alert(result);
-          // refresh
-          showUserThings(currentUserKey);
-        },
+        // reactivate button and confirm change
+        chkbox.disabled = false;
+        chkbox.checked = !chkbox.checked;
+        //alert(result);
+        // refresh
+        setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
+      },
       error:function(err){
+        // reactivate button and revert change
+        chkbox.disabled = false;
+        //button.checked = !button.checked;
         alert(err.status + " - " + err.statusText + "\n" + err.responseText);
         // refresh
-        showUserThings(currentUserKey);
-    }
+        setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
+      }
   });
 }
 

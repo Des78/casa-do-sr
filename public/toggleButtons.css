@@ -42,20 +42,28 @@
 .tgl:checked + .tgl-btn:after {
   left: 50%;
 }
+.tgl:disabled + .tgl-btn:after {
+  left: 25%;
+  background: var(--bg-title1-color);
+}
 
 .tgl-light + .tgl-btn {
   background: var(--bg-title1-color);
   border-radius: 1.5em;
-  padding: 2px;
-  transition: all .4s ease;
+  padding: 0.1em;
+  transition: all .3s ease;
 }
 .tgl-light + .tgl-btn:after {
   border-radius: 50%;
   background: var(--bg-butt-highlight-color);
-  transition: all .2s ease;
+  transition: all .3s ease;
 }
 .tgl-light:checked + .tgl-btn {
   background: var(--bg-button-color);
+}
+.tgl-light:disabled + .tgl-btn {
+  background: var(--bg-title2-color);
+  transition: all .4s ease;
 }
 /*
 .tgl-ios + .tgl-btn {
