@@ -36,7 +36,11 @@ function iftttSubmit(formId, chkbox){
         // reactivate button and revert change
         chkbox.disabled = false;
         //button.checked = !button.checked;
-        alert(err.status + " - " + err.statusText + "\n" + err.responseText);
+        let errMsg = err.responseJSON? err.responseJSON.resultSummary: err.responseText;
+        if (err.responseJSON.resultMessages)
+          err.responseJSON.resultMessages.forEach(msg => { errMsg += "\n  " + msg; });
+        alert(err.status + " - " + err.statusText + "\n" + errMsg);
+        console.log(err.responseJSON? err.responseJSON: err);
         // refresh
         setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
       }

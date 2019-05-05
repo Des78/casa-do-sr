@@ -6,9 +6,11 @@ exports.ping = (req, res) => {
 
     //res.sendStatus(statusCode);
     res.status(statusCode).send(statusMsg);
-  };
+};
 
-  
+
+exports.delay = ms => new Promise(res => setTimeout(res, ms));
+
 
 // try to get parameter from body(post), url path(route) or url query(url params), in that order of precedent
 exports.getParam = (req, paramName) => {

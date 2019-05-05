@@ -25,6 +25,7 @@
     "node-persist": "^2.1.0",
     "npm": "^6.9.0",
     "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
     "safe-buffer": "^5.1.2",
     "type-is": "^1.6.17"
   },
