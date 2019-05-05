@@ -96,15 +96,20 @@ th:first-child,th:first-child,td:first-child{padding-left:16px}
 /* avoid line breaks on Forms */ 
 form { display:inline; margin:0; padding:0; }
 
+header {
+  background-color: var(--bg-title1-color);
+  margin:0;
+  padding: 8px;
+}
 
 .error-text {
   color: var(--err-color);
 }
 
 .breadcrum {
-  background-color: var(--bg-title1-color);
-  margin:0;
-  padding: 8px;
+  display: inline;
+  vertical-align: middle;
+  margin: 0px 4px;
 }
 
 .group-title {

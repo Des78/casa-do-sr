@@ -1,6 +1,7 @@
 // client-side js
 // run by the browser each time your view template is loaded
 
+
 var currentUserKey;
 
 // load first user things at start up
@@ -23,7 +24,7 @@ function iftttSubmit(formId, chkbox){
       url:'/ifttt',
       type:'post',
       data:$('#'+formId).serialize(),
-      success:function(result){
+      success:function(result) {
         // reactivate button and confirm change
         chkbox.disabled = false;
         chkbox.checked = !chkbox.checked;
@@ -31,7 +32,7 @@ function iftttSubmit(formId, chkbox){
         // refresh
         setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
       },
-      error:function(err){
+      error:function(err) {
         // reactivate button and revert change
         chkbox.disabled = false;
         //button.checked = !button.checked;
@@ -42,22 +43,3 @@ function iftttSubmit(formId, chkbox){
   });
 }
 
-/*
-function turnLightsOn()
-{
-  $.post('/LightsOn');
-  alert("ON");
-}
-
-function turnLightsOff()
-{
-  //alert("SwitchingOff");
-  $.post('/LightsOut');
-  alert("OFF");
-}
-
-function triggerTest()
-{
-  $.post('/test');
-}
-*/
