@@ -1,4 +1,4 @@
-// controllers/ifttt.js
+// services/ifttt.js
 'use strict';
 
 const request = require('request-promise-native');
@@ -12,7 +12,7 @@ exports.iftttRequest = (req, response) => {
   try {
     console.log("Handling IFTTT webhook trigger request");
 
-    const util = require('../services/utilities');   
+    const util = require('./utilities');   
     const trigger = util.getParam(req, "trigger");
     const userKey = util.getParam(req, "key");
     // optional params
@@ -27,7 +27,7 @@ exports.iftttRequest = (req, response) => {
 
       // Change thing state if passed as parameter, instead of waiting for state to be propagated from IFTTT (doesn't work most times when the state change is triggered from ifttt)
       if (thingName && newState && (resultObj.errorCode === 0 || resultObj.errorCode === 200)) {
-        const stateMgr = require('../services/stateManager');
+        const stateMgr = require('./stateManager');
         stateMgr.changeState(thingName, newState, userKey, false);
       }
 
@@ -72,7 +72,7 @@ exports.iftttRequest = (req, response) => {
     };
 
     if (userKey) {
-      const persistMgr = require('../services/persistenceManager');
+      const persistMgr = require('./persistenceManager');
   
       let iftttMakerUrl = persistMgr.getUserConfigEntry(userKey, "iftttMakerUrl");
       if (iftttMakerUrl) { 

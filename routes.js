@@ -16,7 +16,7 @@ module.exports = (app) => {
   app.all('/ChangeState/:thing?/:state?/:key?', stateMgr.changeStateRequest);
 
   // Handle requests for IFTTT
-  var ifttt = require('./controllers/ifttt');
+  var ifttt = require('./services/ifttt');
   app.post('/ifttt/:trigger?/:key?', ifttt.iftttRequest);
 
 

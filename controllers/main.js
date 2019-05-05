@@ -1,8 +1,6 @@
 // controllers/main.js
 'use strict';
 
-const ifttt = require('./ifttt');
-
  exports.index = (req, res) => {
 
     // check for dropbox authorization cookie
