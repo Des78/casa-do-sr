@@ -102,6 +102,17 @@ header {
   padding: 8px;
 }
 
+footer {
+  background-color: var(--bg-bright-nuance-color);
+  margin: 8px 0px 0px 0px;
+  padding: 0px;
+  position: absolute;
+  bottom:0;
+  width: 100%;
+}
+
+
+
 .error-text {
   color: var(--err-color);
 }
@@ -145,6 +156,21 @@ header {
   grid-area: state;
 }
 
+
+.footer-title {
+  background-color: var(--bg-title1-color);
+  font-size: 14px;
+  margin: 0px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.txt-log {
+  font-family:'Courier New', Courier, monospace;
+  font-size: 12px;
+  padding: 0px 20px;
+  display: none;
+}
 
 /*
 * {

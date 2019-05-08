@@ -8,6 +8,7 @@ var currentUserKey;
 showUserThings($('#userList').find(":selected").val());
 
 
+
 function showUserThings(userKey)
 {
   currentUserKey=userKey;
@@ -25,12 +26,15 @@ function iftttSubmit(formId, chkbox){
       type:'post',
       data:$('#'+formId).serialize(),
       success:function(result) {
-        // reactivate button and confirm change
-        chkbox.disabled = false;
-        chkbox.checked = !chkbox.checked;
-        //alert(result);
-        // refresh
-        setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
+        // reactivate button and confirm change 
+          // should typically be handled via web-socket - this is just a fallback solution
+        if (!isWsConnected) {
+          chkbox.disabled = false;
+          chkbox.checked = !chkbox.checked;
+          //alert(result);
+          // refresh
+          setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
+        }
       },
       error:function(err) {
         // reactivate button and revert change
@@ -46,4 +50,60 @@ function iftttSubmit(formId, chkbox){
       }
   });
 }
+
+
+// websocket event handlers
+var ws = {};
+var isWsConnected = false;
+initWs();
+
+function initWs() {
+  try {
+    isWsConnected = false;
+    ws = new WebSocket('ws://'+window.location.host+'/?key='+currentUserKey);    
+
+    ws.onopen = (e) => { log("socket open!"); isWsConnected = true; }
+    // retry connection on close
+    ws.onclose = (e) => { log("socket closed!"); setTimeout(() => { initWs() }, 10000); }
+    // error will also trigger connection close
+    ws.onerror = (e) => { log("socket error!")}
+
+    ws.onmessage = (e) => { 
+      log("message recieved: " + e.data); 
+      isWsConnected = true;
+    
+      let msgObj = JSON.parse(e.data);
+      if (!msgObj) msgObj = e.data;
+    
+      if (msgObj.eventName === "StateChanged") {
+        //update the thing state display
+        let chkbox = $("#cb_" + msgObj.eventData.thing)[0];
+        chkbox.disabled = false;
+        chkbox.checked = !chkbox.checked;
+    
+        // refresh things list (to get nextState form data up-to-date)
+        setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
+      }
+    };  
+  } catch (error) {
+    log("error on websocket init: " + error);
+  }
+
+}
+
+
+
+// logging
+function log(msg) {
+  $('#socketLog').append(new Date().toISOString() + " - " + msg + "<br>"); 
+}
+
+
+// toogle log display
+$('#logHeader').click(function () {
+  if ($('#socketLog').css("display") === "none") 
+    $('#socketLog').css("display", "block");
+  else
+    $('#socketLog').css("display", "none");
+});
 

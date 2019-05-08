@@ -9,7 +9,6 @@ exports.changeStateRequest = (req, res) => {
 
     let resultObj = changeState(thingName, newState, userKey, stateSource);
 
-
     if (process.env.FWD_URL) {
         // forward request to secondary server
         const requester = require('request');
@@ -72,6 +71,10 @@ function changeState(thingName, newState, userKey, stateSource) {
             thing.stateSource = stateSource? stateSource: "unknown";
             persistMgr.saveThing(thing, userKey);
             resultObj.resultSummary = thingName + " state changed to " + newState;
+
+            // publish state changed
+            const socketMgr = require('../services/socketManager');
+            socketMgr.publish(userKey, "StateChanged", { thing: thingName, newState: newState } );
         }
         else {
             resultObj.errorCode = 400;

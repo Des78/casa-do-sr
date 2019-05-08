@@ -12,10 +12,12 @@ exports.ping = (req, res) => {
 exports.delay = ms => new Promise(res => setTimeout(res, ms));
 
 
-// try to get parameter from body(post), url path(route) or url query(url params), in that order of precedent
+// try to get parameter from session, body(post), url path(route) or url query(url params), in that order of precedent
 exports.getParam = (req, paramName) => {
     let paramVal = null;
     if (req && paramName) {
+        if (req.session && req.session[paramName])
+            paramVal = req.session[paramName];
         if (req.body && req.body[paramName])
             paramVal = req.body[paramName];
         else if (req.params && req.params[paramName])

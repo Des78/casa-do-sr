@@ -46,6 +46,12 @@ app.use((req, res, next) => {
   }
 });
 */
+
+// setup sockets
+const socketMan = require('./services/socketManager');
+socketMan.init(app);
+
+
 require('./routes')(app);
 
 // initialize DB
