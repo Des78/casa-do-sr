@@ -11,7 +11,12 @@ showUserThings($('#userList').find(":selected").val());
 
 function showUserThings(userKey)
 {
-  currentUserKey=userKey;
+  if (currentUserKey !== userKey)
+  {
+    currentUserKey=userKey;
+    initWs();
+  }
+  
   $.get( '/thingsList', { user: userKey }, function(data) {
     $('#thingsList').html(data); 
   });
@@ -55,7 +60,6 @@ function iftttSubmit(formId, chkbox){
 // websocket event handlers
 var ws = {};
 var isWsConnected = false;
-initWs();
 
 function initWs() {
   try {
