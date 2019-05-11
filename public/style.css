@@ -170,6 +170,7 @@ footer {
   font-size: 12px;
   padding: 0px 20px;
   display: none;
+  max-height: 150px;
 }
 
 /*

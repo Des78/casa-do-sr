@@ -34,11 +34,8 @@ exports.list = (req, res) => {
       groupIdx++;
       groups[groupIdx] = group;
     }
-    // shallow clone - for deepclone: let thingVM = JSON.parse(JSON.stringify(thing));
-    let thingVM = {...thing};
-    thingVM.isToogle = thing instanceof ToogleThing;
-    thingVM.isProgressive = thing instanceof ProgressiveThing;
-    thingVM.isOff = thing.state === "off";
+    let thingVM = getThingViewModel(thing);
+
     groups[groupIdx].things.push(thingVM);
   });
 
@@ -50,6 +47,26 @@ exports.list = (req, res) => {
 
   // show things list
   res.render('thingGroups.mustache', tplData);
-
 };
+
+
+function getThingViewModel(thing) {
+  // shallow clone - for deepclone: let thingVM = JSON.parse(JSON.stringify(thing));
+  let thingVM = { ...thing };
+  thingVM.isToogle = thing instanceof ToogleThing;
+  thingVM.isProgressive = thing instanceof ProgressiveThing;
+  thingVM.isOff = thing.state === "off";
+
+  if (thingVM.isProgressive) {
+    thingVM.progressPercent = Math.round(thingVM.progress * 100) + "%";
+
+    thingVM.innerThings = [];
+    thingVM.innerThings.push(getThingViewModel(thing._decreaseThing));
+    thingVM.innerThings.push(getThingViewModel(thing._increaseThing));
+  }
+  else 
+    thingVM.innerThings = "self";
+
+  return thingVM;
+}
 

@@ -1,3 +1,4 @@
+const InnerThingSeparator = "-_-";
 
 
 exports.changeStateRequest = (req, res) => {
@@ -65,16 +66,32 @@ function changeState(thingName, newState, userKey, stateSource) {
       
     if (userKey) {
         const persistMgr = require('../services/persistenceManager');
+
+        let childThingName = "";
+        let childNewState = "";
+        if (thingName.includes(InnerThingSeparator)) {
+          // composed thing
+          childThingName = thingName;
+          childNewState = newState;
+          thingName = childThingName.substring(0, childThingName.indexOf(InnerThingSeparator));
+        }
+
         let thing = persistMgr.getThing(thingName, userKey);
         if (thing) {
+            if (childThingName) {
+              newState = thing.getParentStateForInnerStateChange(childThingName, newState);
+              console.log("ChangeParentState: " + thingName + " " + newState);
+            }
+
             thing.state = newState;
             thing.stateSource = stateSource? stateSource: "unknown";
+
             persistMgr.saveThing(thing, userKey);
             resultObj.resultSummary = thingName + " state changed to " + newState;
 
             // publish state changed
             const socketMgr = require('../services/socketManager');
-            socketMgr.publish(userKey, "StateChanged", { thing: thingName, newState: newState } );
+            socketMgr.publish(userKey, "StateChanged", { thing: thingName, newState: newState, source: stateSource } );
         }
         else {
             resultObj.errorCode = 400;

@@ -79,7 +79,7 @@ class PersistenceManager {
     }
     
     getThing(thingName, userKey) {
-        let thing = {};
+        let thing = null;
         if (userDb[userKey]) {
             let thingData = userDb[userKey].getItemSync(thingName);
             if (thingData) {

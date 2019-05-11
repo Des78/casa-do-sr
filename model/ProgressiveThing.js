@@ -1,6 +1,7 @@
 
 const Thing = require('./Thing');
 const ToogleThing = require('./ToogleThing');
+const InnerThingSeparator = "-_-";
 
 //private vars
 //const _state = new WeakMap();
@@ -15,12 +16,15 @@ module.exports = class ProgressiveThing extends Thing {
     this.executionSecs = thingData.executionSecs;
 
     // switches for up/down; open/close; forward/backward; etc
-    this._increaseThing = thingData._increaseThing? thingData._increaseThing : ToogleThing.createInstance(this._generateInternalThingData(thingData, "-inc"), userKey);
-    this._decreaseThing = thingData._decreaseThing? thingData._decreaseThing : ToogleThing.createInstance(this._generateInternalThingData(thingData, "-dec"), userKey);
+    this._increaseThing = ToogleThing.createInstance((thingData._increaseThing? thingData._increaseThing : this._generateInternalThingData(thingData, "inc")), userKey);
+    this._decreaseThing = ToogleThing.createInstance((thingData._decreaseThing? thingData._decreaseThing : this._generateInternalThingData(thingData, "dec")), userKey);
     // aux variables to calculate progress
-    this._initialProgress = thingData._initialProgress? thingData._initialProgress: this.progress;
-    this._startDate = thingData._startDate? thingData._startDate: null;
-    this._isIncreasing = thingData._isIncreasing? thingData._isIncreasing: null;
+    this._initialProgress = (thingData._initialProgress !== null && '_initialProgress' in thingData)? thingData._initialProgress: this.progress;
+    this._startDate = (thingData._startDate != null && '_startDate' in thingData)? thingData._startDate: null;
+    this._isIncreasing = (thingData._isIncreasing !== null && '_isIncreasing' in thingData)? thingData._isIncreasing: null;
+
+    // recalculate progress on init
+    this._calculateProgress();
   }
 
   //get posibleStates()  { return [0, 0.25, 0.5, 0.75, 1]; }
@@ -31,20 +35,19 @@ module.exports = class ProgressiveThing extends Thing {
   get state()  { return super.state; }
   set state(val)  { 
     super.state = val;
-    //this.progress = val;
-    //_state.set(this, val);
 
     if (val === "increasing")
       this._startIncreasing();
     else if (val === "decreasing")
       this._startDecreasing();
-    else if (this._isIncreasing)
+    else {
+      // set all off
       this._stopIncreasing();
-    else
       this._stopDecreasing();
+    }
 
     if (this.state === "off" || !this.state)
-      this.nextState = [ "<", ">" ];
+      this.nextState = [ "increasing", "decreasing" ];
     else
       this.nextState = "off";
 
@@ -54,7 +57,7 @@ module.exports = class ProgressiveThing extends Thing {
   merge(thing) {
     let res = super.merge(thing);
     if (res >= 0) {
-      if (thing.executionSecs && thing.executionSecs != this.executionSecs) {
+      if (thing.executionSecs !== null && thing.executionSecs != this.executionSecs) {
         this.executionSecs = thing.executionSecs;
         res++;
       }
@@ -70,12 +73,8 @@ module.exports = class ProgressiveThing extends Thing {
         this._startDate = thing._startDate;
         res++;
       }
-      if (thing._isIncreasing && thing._isIncreasing != this._isIncreasing) {
+      if (thing._isIncreasing !== null && ('_isIncreasing' in thing) && thing._isIncreasing != this._isIncreasing) {
         this._isIncreasing = thing._isIncreasing;
-        res++;
-      }
-      if (thing.progress && thing.progress != this.progress) {
-        this.progress = thing.progress;
         res++;
       }
 
@@ -99,6 +98,21 @@ module.exports = class ProgressiveThing extends Thing {
   }
 
 
+  
+  getParentStateForInnerStateChange(innerThingName, newState) 
+  {
+    let newParentState = "";
+    if (innerThingName === this._increaseThing.name)
+      newParentState = (newState === "on")? "increasing" : "off";
+
+    else if (innerThingName === this._decreaseThing.name) 
+      newParentState = (newState === "on")? "decreasing" : "off";
+
+    else 
+      throw("Inner thing '" + innerThingName + "' not found in " + this.name );
+    
+    return newParentState;
+  }
 
 
   _startIncreasing() {
@@ -153,19 +167,6 @@ module.exports = class ProgressiveThing extends Thing {
 
       let tmpProgress = this._initialProgress + amountOfProgress;
       this.progress = (tmpProgress > 1)? 1: ((tmpProgress < 0)? 0: tmpProgress);
-
-      // find closest discrete state value
-      let minDiff = 1;
-      let closestStateIdx = 0;
-      for (let i = 0; i < this.posibleStates.length; i++) {
-        let curDiff = Math.abs(this.posibleStates[i] - this.progress);
-        if (curDiff < minDiff) {
-          minDiff = curDiff;
-          closestStateIdx = i;
-        }
-      }
-      //_state.set(this, this.posibleStates[closestStateIdx]);
-      this._state = this.posibleStates[closestStateIdx];
     }
 
     return this.progress;
@@ -174,11 +175,12 @@ module.exports = class ProgressiveThing extends Thing {
 
   _generateInternalThingData(parentData, sufix) {
     let thingData = {
-      "name": parentData.name + sufix,
+      "name": parentData.name + InnerThingSeparator + sufix,
       "group": parentData.group+"[internal]", 
       "initialState": "off", 
       "defaultState": "off", 
-      "iftttConnected": parentData.iftttConnected
+      "iftttConnected": parentData.iftttConnected,
+      "parentThing": parentData.name
     }
     
     return thingData;

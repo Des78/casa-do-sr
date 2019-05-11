@@ -4,7 +4,7 @@
   "things": [
     { "name": "Plug01", "group": "Office 1", "iftttConnected":true, "_type": "ToogleThing" },
     { "name": "MainPc", "group": "Office 1", "_type": "ToogleThing" },
-    { "name": "ShutterOffice01", "group": "Office 1", "_type": "ProgressiveThing" },
+    { "name": "ShutterOffice-R", "group": "Office 1", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
     { "name": "ShutterOffice02", "group": "Office 2", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
     { "name": "OfficeD-Dn", "group": "Office 2", "iftttConnected":true, "_type": "ToogleThing" },
     { "name": "Light01", "group": "Living Room", "_type": "ToogleThing" } 

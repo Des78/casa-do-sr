@@ -11,6 +11,7 @@ module.exports = class Thing {
       this._defaultState = thingData.defaultState? thingData.defaultState: thingData._defaultState;
       this.stateSource = thingData.stateSource? thingData.stateSource: "unknown";
       this.iftttConnected = thingData.iftttConnected;
+      this.parentThing = thingData.parentThing;
       this._type = this.constructor.name;
 
       this._ownerKey = userKey;

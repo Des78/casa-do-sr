@@ -1,17 +1,18 @@
 
-        {{#nextState}}
+        {{#innerThings}}
         <form id="iftttForm_{{name}}">
             <input type="hidden" name="showResults" value="json">
-            <input type="hidden" name="trigger" value="{{name}}_{{.}}">
+            <input type="hidden" name="trigger" value="{{name}}_{{nextState}}">
             <input type="hidden" name="key" value="{{_ownerKey}}">
             <input type="hidden" name="thing" value="{{name}}">
-            <input type="hidden" name="state" value="{{.}}">
+            <input type="hidden" name="state" value="{{nextState}}">
+            <input type="hidden" name="fallbackState" value="{{_state}}">
             
-            <!-- <input type="button" value="{{.}}" style="padding: 0px 6px" onclick="iftttSubmit('iftttForm_{{name}}');"> -->
+            <!-- <input type="button" value="{{nextState}}" style="padding: 0px 6px" onclick="iftttSubmit('iftttForm_{{name}}');"> -->
 
-            <input class="tgl tgl-light" id="cb_{{name}}" type="checkbox" value="{{.}}" {{^isOff}} checked {{/isOff}} 
-            {{#iftttConnected}} onclick="iftttSubmit('iftttForm_{{name}}', this);" {{/iftttConnected}} />
+            <input class="tgl tgl-light" id="cb_{{name}}" type="checkbox" value="{{nextState}}" {{^isOff}} checked {{/isOff}} 
+            {{#iftttConnected}} onclick="iftttSubmit('iftttForm_{{name}}', this);" {{/iftttConnected}} alt="source: {{stateSource}}" />
             <label class="tgl-btn" for="cb_{{name}}"></label>
         </form>
-        {{/nextState}}       
-        <!-- ({{stateSource}}) -->
+        {{/innerThings}}       
+        {{#isProgressive}}{{progressPercent}}{{/isProgressive}}

@@ -4,10 +4,6 @@
 
 var currentUserKey;
 
-// load first user things at start up
-showUserThings($('#userList').find(":selected").val());
-
-
 
 function showUserThings(userKey)
 {
@@ -60,11 +56,12 @@ function iftttSubmit(formId, chkbox){
 // websocket event handlers
 var ws = {};
 var isWsConnected = false;
+const wsProtocol = (location.protocol === 'https:')? 'wss' : 'ws';
 
 function initWs() {
   try {
     isWsConnected = false;
-    ws = new WebSocket('ws://'+window.location.host+'/?key='+currentUserKey);    
+    ws = new WebSocket(wsProtocol+'://'+window.location.host+'/?key='+currentUserKey);    
 
     ws.onopen = (e) => { log("socket open!"); isWsConnected = true; }
     // retry connection on close
@@ -82,9 +79,10 @@ function initWs() {
       if (msgObj.eventName === "StateChanged") {
         //update the thing state display
         let chkbox = $("#cb_" + msgObj.eventData.thing)[0];
-        chkbox.disabled = false;
-        chkbox.checked = !chkbox.checked;
-    
+        if (chkbox) {
+          chkbox.disabled = false;
+          chkbox.checked = !chkbox.checked;
+        }
         // refresh things list (to get nextState form data up-to-date)
         setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
       }
@@ -110,4 +108,11 @@ $('#logHeader').click(function () {
   else
     $('#socketLog').css("display", "none");
 });
+
+
+
+// Startup
+
+// load first user things at start up
+showUserThings($('#userList').find(":selected").val());
 
