@@ -7,6 +7,7 @@ module.exports = class Thing {
   constructor(thingData, userKey) {
       this.name = thingData.name;
       this.group = thingData.group;
+      this.label = thingData.label? thingData.label: thingData.name;
       this.state = thingData.initialState? thingData.initialState: thingData._state;
       this._defaultState = thingData.defaultState? thingData.defaultState: thingData._defaultState;
       this.stateSource = thingData.stateSource? thingData.stateSource: "unknown";
@@ -45,6 +46,10 @@ module.exports = class Thing {
         res = 0;
         if (thing.group && thing.group != this.group) {
           this.group = thing.group;
+          res++;
+        }
+        if (thing.label && thing.label != this.label) {
+          this.label = thing.label;
           res++;
         }
         if (thing._state && thing._state != this._state) {

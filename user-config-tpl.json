@@ -2,12 +2,23 @@
   "isEnabled": true,
   "iftttMakerUrl": "https://maker.ifttt.com/use/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "things": [
-    { "name": "Plug01", "group": "Office 1", "iftttConnected":true, "_type": "ToogleThing" },
-    { "name": "MainPc", "group": "Office 1", "_type": "ToogleThing" },
-    { "name": "ShutterOffice-R", "group": "Office 1", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
-    { "name": "ShutterOffice02", "group": "Office 2", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
-    { "name": "OfficeD-Dn", "group": "Office 2", "iftttConnected":true, "_type": "ToogleThing" },
-    { "name": "Light01", "group": "Living Room", "_type": "ToogleThing" } 
+    { "name": "Plug01", "label": "Light", "group": "Office 1", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "MainPc", "label": "PC", "group": "Office 1", "_type": "ToogleThing" },
+    { "name": "ShutterOffice-R", "label": "Window Blinds", "group": "Office 1", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
+    { "name": "ShutterOffice02", "label": "Window Blinds", "group": "Office 2", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
+    { "name": "LightLivingRoom-_-channel 1", "label": "Wall Light", "group": "Living Room", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "LightLivingRoom-_-channel 3", "label": "Ceiling Light", "group": "Living Room", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "LightLivingRoom-_-channel 2", "label": "Back Light", "group": "Living Room", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "LightLivRoomFloor-_-channel 1", "label": "Floor Light", "group": "Living Room", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "LightLivRoomFloor-_-channel 2", "label": "Office Link", "group": "Living Room", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "ShutterLivingRoom", "label": "Window Blinds", "group": "Living Room", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 30 },
+    { "name": "ShutterBedroom", "label": "Window Blinds", "group": "Bedroom", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
+    { "name": "LightKitchen-_-channel 1", "label": "Main Light", "group": "Kitchten", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "LightKitchen-_-channel 2", "label": "Pantry Light", "group": "Kitchten", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "ShutterKitchenDoor", "label": "Door Blinds", "group": "Kitchten", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 30 },
+    { "name": "ShutterKitchenWindow", "label": "Window Blinds", "group": "Kitchten", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
+    { "name": "Heating", "group": "Home", "iftttConnected":true, "_type": "ToogleThing" },
+    { "name": "TempHumSwitch", "label": "Temperature Switch", "group": "Home", "iftttConnected":true, "_type": "ToogleThing" }
   ],
   "rules": [
     { 
