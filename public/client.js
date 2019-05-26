@@ -25,7 +25,7 @@ function iftttSubmit(formId, chkbox){
   $.post({
       url:'/ifttt',
       type:'post',
-      data:$('#'+formId).serialize(),
+      data:$("[id='"+formId+"']").serialize(),
       success:function(result) {
         // reactivate button and confirm change 
           // should typically be handled via web-socket - this is just a fallback solution
@@ -42,7 +42,7 @@ function iftttSubmit(formId, chkbox){
         chkbox.disabled = false;
         //button.checked = !button.checked;
         let errMsg = err.responseJSON? err.responseJSON.resultSummary: err.responseText;
-        if (err.responseJSON.resultMessages)
+        if (err.responseJSON && err.responseJSON.resultMessages)
           err.responseJSON.resultMessages.forEach(msg => { errMsg += "\n  " + msg; });
         alert(err.status + " - " + err.statusText + "\n" + errMsg);
         console.log(err.responseJSON? err.responseJSON: err);
@@ -78,7 +78,8 @@ function initWs() {
     
       if (msgObj.eventName === "StateChanged") {
         //update the thing state display
-        let chkbox = $("#cb_" + msgObj.eventData.thing)[0];
+        //use 'id=' instead of # to support ids with spaces
+        let chkbox = $("[id='cb_"+msgObj.eventData.thing+"']")[0];
         if (chkbox) {
           chkbox.disabled = false;
           chkbox.checked = !chkbox.checked;

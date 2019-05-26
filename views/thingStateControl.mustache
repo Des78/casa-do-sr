@@ -11,8 +11,8 @@
             <!-- <input type="button" value="{{nextState}}" style="padding: 0px 6px" onclick="iftttSubmit('iftttForm_{{name}}');"> -->
 
             <input class="tgl tgl-light" id="cb_{{name}}" type="checkbox" value="{{nextState}}" {{^isOff}} checked {{/isOff}} 
-            {{#iftttConnected}} onclick="iftttSubmit('iftttForm_{{name}}', this);" {{/iftttConnected}} alt="source: {{stateSource}}" />
-            <label class="tgl-btn" for="cb_{{name}}"></label>
+            {{#iftttConnected}} onclick="iftttSubmit('iftttForm_{{name}}', this);" {{/iftttConnected}} />
+            <label class="tgl-btn" for="cb_{{name}}" title="source: {{stateSource}}"></label>
         </form>
         {{/innerThings}}       
         {{#isProgressive}}{{progressPercent}}{{/isProgressive}}

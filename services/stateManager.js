@@ -69,14 +69,15 @@ function changeState(thingName, newState, userKey, stateSource) {
 
         let childThingName = "";
         let childNewState = "";
-        if (thingName.includes(InnerThingSeparator)) {
+        let thing = persistMgr.getThing(thingName, userKey);
+        if (!thing && thingName.includes(InnerThingSeparator)) {
           // composed thing
           childThingName = thingName;
           childNewState = newState;
           thingName = childThingName.substring(0, childThingName.indexOf(InnerThingSeparator));
+          thing = persistMgr.getThing(thingName, userKey);
         }
 
-        let thing = persistMgr.getThing(thingName, userKey);
         if (thing) {
             if (childThingName) {
               newState = thing.getParentStateForInnerStateChange(childThingName, newState);
@@ -104,6 +105,9 @@ function changeState(thingName, newState, userKey, stateSource) {
         resultObj.resultSummary = "user key not provided";
         resultObj.isError = true;
     }
+
+    if (resultObj.isError)
+      console.warn(resultObj.resultSummary);
 
     return resultObj;
 }

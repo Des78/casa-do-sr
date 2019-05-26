@@ -127,7 +127,10 @@ exports.iftttRequest = (req, response) => {
       resultObj.isError = true;
     }
   
-    console.log(resultObj.resultSummary);
+    if (resultObj.isError)
+      console.warn(resultObj.resultSummary);
+    else
+      console.log(resultObj.resultSummary);
 
     return resultObj;
   }
