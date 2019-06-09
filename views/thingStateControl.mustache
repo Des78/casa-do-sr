@@ -1,18 +1,26 @@
 
         {{#innerThings}}
-        <form id="iftttForm_{{name}}">
+        <form id="stateForm_{{name}}">
             <input type="hidden" name="showResults" value="json">
             <input type="hidden" name="trigger" value="{{name}}_{{nextState}}">
             <input type="hidden" name="key" value="{{_ownerKey}}">
             <input type="hidden" name="thing" value="{{name}}">
-            <input type="hidden" name="state" value="{{nextState}}">
             <input type="hidden" name="fallbackState" value="{{_state}}">
-            
-            <!-- <input type="button" value="{{nextState}}" style="padding: 0px 6px" onclick="iftttSubmit('iftttForm_{{name}}');"> -->
+            <input type="hidden" name="iftttConnected" value="{{iftttConnected}}">
+
+            {{#isBinaryInput}}
+            <input type="hidden" name="state" value="{{nextState}}">
 
             <input class="tgl tgl-light" id="cb_{{name}}" type="checkbox" value="{{nextState}}" {{^isOff}} checked {{/isOff}} 
-            {{#iftttConnected}} onclick="iftttSubmit('iftttForm_{{name}}', this);" {{/iftttConnected}} />
+                onclick="stateSubmit('stateForm_{{name}}', this, {{#iftttConnected}}'/ifttt'{{/iftttConnected}}{{^iftttConnected}}'/ChangeState'{{/iftttConnected}});" />
             <label class="tgl-btn" for="cb_{{name}}" title="source: {{stateSource}}"></label>
+            {{/isBinaryInput}}
+
+            {{#isTextInput}}
+            <input type="{{inputType}}" name="state" value="{{_state}}" step="any">
+            <input type="button" name="save" value="Save" 
+                onclick="stateSubmit('stateForm_{{name}}', this, {{#iftttConnected}}'/ifttt'{{/iftttConnected}}{{^iftttConnected}}'/ChangeState'{{/iftttConnected}});" >
+            {{/isTextInput}}
         </form>
-        {{/innerThings}}       
+        {{/innerThings}}
         {{#isProgressive}}{{progressPercent}}{{/isProgressive}}

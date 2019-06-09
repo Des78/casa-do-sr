@@ -4,6 +4,7 @@
 const Thing = require('../model/Thing');
 const ToogleThing = require('../model/ToogleThing');
 const ProgressiveThing = require('../model/ProgressiveThing');
+const VariableThing = require('../model/VariableThing');
 
 exports.list = (req, res) => {
 
@@ -55,7 +56,9 @@ function getThingViewModel(thing) {
   let thingVM = { ...thing };
   thingVM.isToogle = thing instanceof ToogleThing;
   thingVM.isProgressive = thing instanceof ProgressiveThing;
-  thingVM.isOff = thing.state === "off";
+  thingVM.isVariable = thing instanceof VariableThing;
+  thingVM.isOff = (thing.state === "off" || !thing.state);
+  thingVM.isBinaryInput = true;
 
   if (thingVM.isProgressive) {
     thingVM.progressPercent = Math.round(thingVM.progress * 100) + "%";
@@ -67,6 +70,29 @@ function getThingViewModel(thing) {
   else 
     thingVM.innerThings = "self";
 
+  if (thingVM.isVariable) {
+    switch (thing.variableType) {
+      case "boolean":
+        thingVM.isBinaryInput = true;
+        thingVM.isTextInput = false;
+        thingVM.inputType = "checkbox";
+        break;
+    
+      case "number":
+        thingVM.isBinaryInput = false;
+        thingVM.isTextInput = true;
+        thingVM.inputType = "number";
+        break;
+
+      case "string":
+      default:
+        thingVM.isBinaryInput = false;
+        thingVM.isTextInput = true;
+        thingVM.inputType = "text";
+        break;
+    }
+  }
+  
   return thingVM;
 }
 

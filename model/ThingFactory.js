@@ -1,8 +1,9 @@
 const Thing = require('./Thing');
 const ToogleThing = require('./ToogleThing');
 const ProgressiveThing = require('./ProgressiveThing');
+const VariableThing = require('./VariableThing');
 
-const thingClasses = { Thing, ToogleThing, ProgressiveThing };
+const thingClasses = { Thing, ToogleThing, ProgressiveThing, VariableThing};
 
 exports.getThingType = function getThingType(typeName) {
   return thingClasses[typeName];

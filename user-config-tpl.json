@@ -18,7 +18,16 @@
     { "name": "ShutterKitchenDoor", "label": "Door Blinds", "group": "Kitchten", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 30 },
     { "name": "ShutterKitchenWindow", "label": "Window Blinds", "group": "Kitchten", "iftttConnected":true, "_type": "ProgressiveThing", "executionSecs": 20 },
     { "name": "Heating", "group": "Home", "iftttConnected":true, "_type": "ToogleThing" },
-    { "name": "TempHumSwitch", "label": "Temperature Switch", "group": "Home", "iftttConnected":true, "_type": "ToogleThing" }
+    { "name": "TempHumSwitch", "label": "Temperature Switch", "group": "Home", "iftttConnected":true, "_type": "ToogleThing" },
+
+    { "name": "onVacations", "group": "Variables", "variableType": "boolean", "state": false, "_type": "VariableThing" },
+    { "name": "masterHome", "group": "Variables", "variableType": "boolean", "state": true, "_type": "VariableThing" },
+    { "name": "masterAwake", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
+    { "name": "wifeAwake", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
+    { "name": "windowsOpen", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
+    { "name": "temperatureMode", "group": "Variables", "variableType": "string", "state": "spring", "_type": "VariableThing" },
+    { "name": "outsideTempMin", "group": "Variables", "variableType": "number", "state": 0, "_type": "VariableThing" },
+    { "name": "outsideTempMax", "group": "Variables", "variableType": "number", "_type": "VariableThing" }
   ],
   "rules": [
     { 

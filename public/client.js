@@ -18,20 +18,20 @@ function showUserThings(userKey)
   });
 }
 
-function iftttSubmit(formId, chkbox){
+function stateSubmit(formId, ctrl, targetUrl){
   // disable button while request is being processed
-  chkbox.checked = !chkbox.checked;
-  chkbox.disabled = true;
+  ctrl.checked = !ctrl.checked;
+  ctrl.disabled = true;
   $.post({
-      url:'/ifttt',
+      url:targetUrl,
       type:'post',
       data:$("[id='"+formId+"']").serialize(),
       success:function(result) {
         // reactivate button and confirm change 
           // should typically be handled via web-socket - this is just a fallback solution
         if (!isWsConnected) {
-          chkbox.disabled = false;
-          chkbox.checked = !chkbox.checked;
+          ctrl.disabled = false;
+          ctrl.checked = !ctrl.checked;
           //alert(result);
           // refresh
           setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
@@ -39,7 +39,7 @@ function iftttSubmit(formId, chkbox){
       },
       error:function(err) {
         // reactivate button and revert change
-        chkbox.disabled = false;
+        ctrl.disabled = false;
         //button.checked = !button.checked;
         let errMsg = err.responseJSON? err.responseJSON.resultSummary: err.responseText;
         if (err.responseJSON && err.responseJSON.resultMessages)
