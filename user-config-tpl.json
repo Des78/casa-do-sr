@@ -1,6 +1,10 @@
 {
   "isEnabled": true,
   "iftttMakerUrl": "https://maker.ifttt.com/use/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "locationLat": 41,
+  "locationLon": -7,
+  "GmtOffset": 0,
+  "DaylightSavings": 1,
   "things": [
     { "name": "Plug01", "label": "Light", "group": "Office 1", "iftttConnected":true, "_type": "ToogleThing" },
     { "name": "MainPc", "label": "PC", "group": "Office 1", "_type": "ToogleThing" },
@@ -21,9 +25,9 @@
     { "name": "TempHumSwitch", "label": "Temperature Switch", "group": "Home", "iftttConnected":true, "_type": "ToogleThing" },
 
     { "name": "onVacations", "group": "Variables", "variableType": "boolean", "state": false, "_type": "VariableThing" },
-    { "name": "masterHome", "group": "Variables", "variableType": "boolean", "state": true, "_type": "VariableThing" },
+    { "name": "masterHome", "label": "masterAtHome", "group": "Variables", "variableType": "boolean", "state": true, "_type": "VariableThing" },
     { "name": "masterAwake", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
-    { "name": "wifeAwake", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
+    { "name": "wifeAwake", "label": "mwifeAwake", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
     { "name": "windowsOpen", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
     { "name": "temperatureMode", "group": "Variables", "variableType": "string", "state": "spring", "_type": "VariableThing" },
     { "name": "outsideTempMin", "group": "Variables", "variableType": "number", "state": 0, "_type": "VariableThing" },

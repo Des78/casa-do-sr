@@ -18,6 +18,14 @@ function showUserThings(userKey)
   });
 }
 
+function runWf(wfName)
+{  
+  log("Launching WF " + wfName);
+  $.post('/runWf', { workflow: wfName, key: currentUserKey }, function(data, status) {
+    log(status +": "+ data);
+  });
+}
+
 function stateSubmit(formId, ctrl, targetUrl){
   // disable button while request is being processed
   ctrl.checked = !ctrl.checked;

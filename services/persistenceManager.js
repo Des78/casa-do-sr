@@ -7,26 +7,28 @@ const ThingFactory = require('../model/ThingFactory');
 const presistLib = require('node-persist');
 var users = [];
 var userDb = [];
+var wfInstances = [];
 
 class PersistenceManager {
     constructor () {
-      if (!PersistenceManager.instance) {
-        PersistenceManager.instance = this;
-      }
-      // Initialize object
-      presistLib.initSync({dir: ".data/config"});
-      users = presistLib.getItemSync("userList");
-      users = users? users : [];
+        if (!PersistenceManager.instance) {
+            PersistenceManager.instance = this;
 
-      users.forEach(function(userData) {
-            // initialize user data storage
-            if (userData) {
-                userDb[userData.key] = presistLib.create({dir: ".data/userData/"+userData.key});
-                userDb[userData.key].initSync();
+            // Initialize object
+            presistLib.initSync({dir: ".data/config"});
+            users = presistLib.getItemSync("userList");
+            users = users? users : [];
 
-                PersistenceManager.instance.syncUserObjectsConfig(userData.key);
-            }
-        });
+            users.forEach(function(userData) {
+                // initialize user data storage
+                if (userData) {
+                    userDb[userData.key] = presistLib.create({dir: ".data/userData/"+userData.key});
+                    userDb[userData.key].initSync();
+
+                    PersistenceManager.instance.syncUserObjectsConfig(userData.key);
+                }
+            });
+        }
     
       return PersistenceManager.instance;
     }
@@ -203,7 +205,28 @@ class PersistenceManager {
             thingsToRemove.forEach(storedThingName => {
                 userDb[userKey].removeItem(storedThingName);
             });
+
+            // TODO: WF persistence - for now it's hardcoded, just instanciate them to create event listeners
+            const SetSleepAwake = require('../workflows/SetSleepAwake');
+            wfInstances.push(new SetSleepAwake({'name': 'SetSleepAwake'}, userKey));
+            const SunriseFlow = require('../workflows/SunriseFlow');
+            wfInstances.push(new SunriseFlow({'name': 'SunriseFlow'}, userKey));
+            const SunshiftFlow = require('../workflows/SunshiftFlow');
+            wfInstances.push(new SunshiftFlow({'name': 'SunshiftFlow'}, userKey));
+            const SunsetFlow = require('../workflows/SunsetFlow');
+            wfInstances.push(new SunsetFlow({'name': 'SunsetFlow'}, userKey));
+            const EveningFlow = require('../workflows/EveningFlow');
+            wfInstances.push(new EveningFlow({'name': 'EveningFlow'}, userKey));
+
+            const TestFlow = require('../workflows/TestFlow');
+            wfInstances.push(new TestFlow({'name': 'TestFlow'}, userKey));
+            
         }
+    }
+
+    // TODO: refactor WF storage
+    _getWorkflows() {
+        return wfInstances;
     }
 
   }

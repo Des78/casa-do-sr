@@ -81,7 +81,7 @@ function changeState(thingName, newState, userKey, stateSource) {
         if (thing) {
             if (childThingName) {
               newState = thing.getParentStateForInnerStateChange(childThingName, newState);
-              console.log("ChangeParentState: " + thingName + " " + newState);
+              console.log("  ChangeParentState: " + thingName + " " + newState);
             }
 
             thing.state = newState;
@@ -93,7 +93,14 @@ function changeState(thingName, newState, userKey, stateSource) {
             // publish state changed
             const socketMgr = require('../services/socketManager');
             socketMgr.publish(userKey, "StateChanged", { thing: thingName, newState: newState, source: stateSource } );
-        }
+            const eventMgr = require('../services/eventManager');
+            eventMgr.emit("state:"+thingName, thing);
+            eventMgr.emit("state:"+thingName+"_"+newState, thing);
+            if (childThingName) {
+              eventMgr.emit("state:"+childThingName, thing);
+              eventMgr.emit("state:"+childThingName+"_"+childNewState, thing);  
+            }
+          }
         else {
             resultObj.errorCode = 400;
             resultObj.resultSummary = "could not find " + thingName + " for user key";

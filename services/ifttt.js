@@ -22,7 +22,6 @@ exports.iftttRequest = (req, response) => {
 
     let triggers = [trigger];
     // Call IFTTT
-    //var resultObj = 
     launchTriggerEvents(triggers, userKey).then(resultObj => {
 
       // Change thing state if passed as parameter, instead of waiting for state to be propagated from IFTTT (doesn't work most times when the state change is triggered from ifttt)
@@ -85,7 +84,7 @@ exports.iftttRequest = (req, response) => {
             let trigger = triggers[i];
             // Make a request to baseURL + triggerEvent + withKey + iftttId, which is the complete IFTTT Maker Request URL
             var iftttUrl = baseURL + trigger + withKey + iftttId;
-            console.log(iftttUrl);
+            //console.log(iftttUrl);
 
             try {
               var response = await request({uri: iftttUrl, resolveWithFullResponse: true});
@@ -111,7 +110,7 @@ exports.iftttRequest = (req, response) => {
               resultObj.errorDetails.error = errorObj? errorObj: errorMsg;
               resultObj.isError = true;
             }
-            console.log(resultObj.resultMessages[resultObj.resultMessages.length-1]);
+            //console.log(resultObj.resultMessages[resultObj.resultMessages.length-1]);
           }
         }  
       }

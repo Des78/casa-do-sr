@@ -8,8 +8,8 @@ exports.ping = (req, res) => {
     res.status(statusCode).send(statusMsg);
 };
 
-
-exports.delay = ms => new Promise(res => setTimeout(res, ms));
+const maxDelayMs = 12*60*60*1000;
+exports.delay = ms => new Promise(res => setTimeout(res, Math.min(ms, maxDelayMs)));
 
 
 // try to get parameter from session, body(post), url path(route) or url query(url params), in that order of precedent
@@ -28,4 +28,12 @@ exports.getParam = (req, paramName) => {
     return paramVal;
 }
 
+
+exports.isDst = () => {
+    let now = new Date();
+    let jan = new Date(now.getFullYear(), 0, 1);
+    let jul = new Date(now.getFullYear(), 6, 1);
+    
+    return now.getTimezoneOffset() < Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+}
 

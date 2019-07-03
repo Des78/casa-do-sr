@@ -17,7 +17,7 @@ exports.list = (req, res) => {
 
   let things = persistMgr.getUserThings(userKey);
   // sort by group and then by name
-  things = things.sort((a,b) => (a.group !== b.group)? a.group.localeCompare(b.group): a.name.localeCompare(b.name));
+  things = things.sort((a,b) => (a.group !== b.group)? a.group.localeCompare(b.group): a.label.localeCompare(b.label));
   //let groups = [...new Set(things.map(t => t.group))];
   let groups = [];
   let groupIdx = -1;

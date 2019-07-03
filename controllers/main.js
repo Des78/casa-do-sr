@@ -10,9 +10,13 @@
       var tplData = {};
 
       const persistMgr = require('../services/persistenceManager')
-      tplData.usersData = persistMgr._getUsersData();
+      tplData.usersData = persistMgr._getUsersData().slice();
       //add blank user
       //tplData.usersData.unshift({});
+
+      tplData.wfs = persistMgr._getWorkflows().slice();
+      //add blank wf
+      tplData.wfs.unshift({});
 
 
       // show main page

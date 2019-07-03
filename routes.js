@@ -19,6 +19,9 @@ module.exports = (app) => {
   var ifttt = require('./services/ifttt');
   app.post('/ifttt/:trigger?/:key?', ifttt.iftttRequest);
 
+  // handle workflow launch requests
+  var wfMgr = require('./services/workflowManager');
+  app.all('/runWf/:workflow?/:key?', wfMgr.runWfRequest);
 
   
 

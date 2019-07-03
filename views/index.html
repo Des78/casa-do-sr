@@ -25,6 +25,12 @@
         <option value="{{key}}">{{name}}</option>
         {{/usersData}}
       </select>
+      <select id="wfList" onchange="runWf(this.value);" ondblclick="onchange();">
+        {{#wfs}}
+        <option value="{{name}}">{{name}}</option>
+        {{/wfs}}
+      </select>
+
       <div id="thingsList" class="things-section">
       </div>
     </section>
