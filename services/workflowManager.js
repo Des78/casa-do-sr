@@ -28,7 +28,7 @@ async function runWf(wfName, userKey) {
         isAsync: false
       };
 
-    console.log("Start WF: " + wfName + " / " + userKey);
+    console.log("Run WF: " + wfName + " / " + userKey);
       
     if (userKey) {
         const persistMgr = require('../services/persistenceManager');

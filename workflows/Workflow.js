@@ -20,7 +20,8 @@ module.exports = class Workflow {
       this.triggers.forEach((trigger) => {
         eventMgr.subscribe(trigger, (source) => { 
           if (this.evaluate(trigger, source))
-            this.run(trigger, source);
+          console.log("Starting WF " + this.name);
+          this.run(trigger, source);
         });
       });      
     }

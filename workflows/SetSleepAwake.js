@@ -76,7 +76,7 @@ module.exports = class SetSleepAwake extends Workflow {
             this.changeThingState("wifeAwake", true);
           }
       }
-      else if (userLocalHour >= 12 && userLocalHour < 22)
+      else if (eventName === awakeTimeEvent)
       {
         // auto set awake
         this.changeThingState("masterAwake", true);

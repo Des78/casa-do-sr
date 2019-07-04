@@ -1,6 +1,6 @@
 var Workflow = require('./Workflow');
 
-const sunsetEvent = "astro:sunset";
+const sunsetEvent = "timeDst:2030"; //"astro:sunset";
 
 
 module.exports = class SunsetFlow extends Workflow {
@@ -31,7 +31,7 @@ module.exports = class SunsetFlow extends Workflow {
       await util.delay(1000);
       await this.changeIftttProgThingToTarget("ShutterBedroom", ((temperatureMode === "winter")? 0: (temperatureMode === "summer")? 1: 0.66));
       await util.delay(60000);
-      await this.changeThingStateIfttt("LightKitchen-_-channel 1", "on");
+      await this.changeThingStateIfttt("LightKitchen-_-channel 2", "on");
   
       if (isOnVacations) {
         await this.changeThingStateIfttt("Plug01", "on");

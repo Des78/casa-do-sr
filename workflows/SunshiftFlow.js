@@ -1,13 +1,12 @@
 var Workflow = require('./Workflow');
 
-const sunshiftEvent = "astro:azimuth=120";
-const sunshiftTimeEvent = "timeDst:1130";
+const sunshiftEvent = "timeDst:1130"; //"astro:azimuth=120";
 
 
 module.exports = class SunshiftFlow extends Workflow {
 
     // events that trigger evaluation and execution of this workflow
-  get triggers()  { return [sunshiftEvent, sunshiftTimeEvent]; }
+  get triggers()  { return [sunshiftEvent]; }
   
 
     // run actions

@@ -1,6 +1,6 @@
 var Workflow = require('./Workflow');
 
-const eveningTimeEvent = "timeDst:21:42";
+const eveningTimeEvent = "timeDst:2142";
 
 
 module.exports = class EveningFlow extends Workflow {
@@ -30,6 +30,7 @@ module.exports = class EveningFlow extends Workflow {
       await this.changeIftttProgThingToTarget("ShutterLivingRoom", ((temperatureMode === "winter")? 0: (temperatureMode === "summer")? 0.5: 0.15));
       await util.delay(1000);
       await this.changeIftttProgThingToTarget("ShutterBedroom", ((temperatureMode === "winter")? 0: (temperatureMode === "summer")? 0.5: 0));
+      await this.changeThingStateIfttt("LightKitchen-_-channel 2", "off");
       await util.delay(10*60*1000);
       await this.changeIftttProgThingToTarget("ShutterOffice-R", ((temperatureMode === "winter")? 0: (temperatureMode === "summer")? 0.66: 0));
   
@@ -40,7 +41,6 @@ module.exports = class EveningFlow extends Workflow {
         await this.changeIftttProgThingToTarget("ShutterKitchenDoor", 0);
         await util.delay(5*60*1000);
         await this.changeIftttProgThingToTarget("ShutterKitchenWindow", 0);
-        await this.changeThingStateIfttt("LightKitchen-_-channel 1", "off");
         await util.delay(1000);
         await this.changeIftttProgThingToTarget("ShutterOffice02", 0);
         await util.delay(30*60*1000);
