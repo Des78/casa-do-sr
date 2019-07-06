@@ -31,7 +31,8 @@
     { "name": "windowsOpen", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
     { "name": "temperatureMode", "group": "Variables", "variableType": "string", "state": "spring", "_type": "VariableThing" },
     { "name": "outsideTempMin", "group": "Variables", "variableType": "number", "state": 0, "_type": "VariableThing" },
-    { "name": "outsideTempMax", "group": "Variables", "variableType": "number", "_type": "VariableThing" }
+    { "name": "outsideTempMax", "group": "Variables", "variableType": "number", "_type": "VariableThing" },
+    { "name": "stayingAlive", "group": "Variables", "variableType": "string", "_type": "VariableThing" }
   ],
   "rules": [
     { 
