@@ -95,7 +95,11 @@ function initWs() {
         // refresh things list (to get nextState form data up-to-date)
         setTimeout(() => { showUserThings(currentUserKey); }, 1000); 
       }
-    };  
+    };
+
+    // send regular heartbeat so that websocket doesn't timeout
+    setInterval(() => { ws.send("heartbeat " + currentUserKey ) }, 60000);
+
   } catch (error) {
     log("error on websocket init: " + error);
   }
