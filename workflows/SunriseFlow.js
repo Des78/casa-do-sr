@@ -16,9 +16,9 @@ module.exports = class SunriseFlow extends Workflow {
 
     let res = super.evaluate(eventName, source);
 
-    if (res && eventName !== runOnDemandEvent)
+    //if (res && eventName !== runOnDemandEvent)
     {
-      // TODO: Get offset from user config
+      // TODO: Get offset from user config; see https://momentjs.com/timezone/docs/
       let userLocalHour = new Date().getUTCHours() + 0 + (util.isDst()? 1: 0);
       // TODO: Get sunrise time at user location to determine if it's daytime
       let isAfterSunrise = true;
@@ -46,7 +46,8 @@ module.exports = class SunriseFlow extends Workflow {
       let isOnVacations = persistMgr.getThing("onVacations", this._ownerKey).state;
 
       await this.changeIftttProgThingToTarget("ShutterOffice-R", ((temperatureMode === "winter")? 1: (temperatureMode === "summer")? 0: 0.33));
-      await this.changeThingStateIfttt("Plug01", "off");
+      if (temperatureMode !== "summer")
+        await this.changeThingStateIfttt("Plug01", "off");
       await util.delay(10000);
       await this.changeIftttProgThingToTarget("ShutterOffice02", ((temperatureMode === "winter")? 1: (temperatureMode === "summer")? 0: 0.33));
       await util.delay(1000);

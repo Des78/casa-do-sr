@@ -91,6 +91,6 @@ function onDisconnect() {
 
 
 function onMessage(msg) {
-
-    console.log("client socket message recieved??: " + msg);
+    if (!String(msg).startsWith("heartbeat"))
+        console.log("client socket message recieved: " + msg);
 }

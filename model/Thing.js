@@ -27,8 +27,6 @@ module.exports = class Thing {
       {
         //_state.set(this, val);
         this._state = val;        
-        
-        // TODO: Persist object?
       }
       else
         throw("Invalid state '" + val + "'; Allowed states: " + this.posibleStates );

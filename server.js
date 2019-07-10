@@ -47,6 +47,22 @@ app.use((req, res, next) => {
 });
 */
 
+// setup console.log to also log to file
+var fs = require('fs');
+var util = require('util');
+var logFile = fs.createWriteStream('log.txt', { flags: 'a' });
+  // Or 'w' to truncate the file every time the process starts.
+var logStdout = process.stdout;
+
+console.log = function () {
+  let now = new Date().toISOString();
+  logFile.write(now + " : " + util.format.apply(null, arguments) + '\n');
+  logStdout.write(now + " : " + util.format.apply(null, arguments) + '\n');
+}
+console.warn = console.log;
+console.error = console.log;
+
+
 // setup sockets
 const socketMan = require('./services/socketManager');
 socketMan.init(app);

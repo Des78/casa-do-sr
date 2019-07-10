@@ -43,6 +43,7 @@ class EventManager extends EventEmitter {
         
         let eventNameUtc = "timeUtc:"+String(hourUTC).padStart(2, "0")+String(minuteUTC).padStart(2, "0");
         let eventNameDst = "timeDst:"+String(hourDST).padStart(2, "0")+String(minuteUTC).padStart(2, "0");
+        let eventNameMin = "timeMin:"+String(minuteUTC).padStart(2, "0");
 
         let evtInstance = new EventManager();
         if (evtInstance.lastTimeMinute !== minuteUTC) {
@@ -58,6 +59,8 @@ class EventManager extends EventEmitter {
             evtInstance.emit(eventNameUtc, source);
           if (subscriptions.includes(eventNameDst)) 
             evtInstance.emit(eventNameDst, source);
+          if (subscriptions.includes(eventNameMin)) 
+            evtInstance.emit(eventNameMin, source);
         }          
       } catch (error) {
         console.error(error);        

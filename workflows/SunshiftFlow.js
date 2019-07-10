@@ -1,6 +1,6 @@
 var Workflow = require('./Workflow');
 
-const sunshiftEvent = "timeDst:1130"; //"astro:azimuth=120";
+const sunshiftEvent = "timeDst:1126"; //"astro:azimuth=120";
 
 
 module.exports = class SunshiftFlow extends Workflow {
