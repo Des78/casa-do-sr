@@ -79,7 +79,7 @@ select {
 
 /* from w3.css w3-ul */
 ul {list-style-type:none;padding:0;margin:0}
-li{padding:8px 16px;border-bottom:1px solid var(--border-color)}
+li{padding: 8px 8px 8px 16px;border-bottom:1px solid var(--border-color)}
 li:hover{background-color:var(--bg-brighter-nuance-color)}
 li:last-child{border-bottom:none}
 
@@ -133,16 +133,25 @@ footer {
 .things-section {
   margin: 10px 0px;
 }
-.group-things-container {
+.group-things-flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  /*justify-content: space-evenly;*/
+}
+.group-things-grid-container {
   margin-left: 40px;
 }
+
 .thing-container {
   display: grid;
-  grid-template-columns: minmax(150px, auto) auto auto 1fr;
+  grid-template-columns: minmax(150px, auto) auto auto minmax(100px, 1fr);
   grid-template-areas: "name type group state";
   grid-column-gap: 2px;
-    
+  padding: 8px 8px 8px 16px;
+  border:1px solid var(--border-color);
+  flex-grow: 1;
 }
+.thing-container:hover{background-color:var(--bg-brighter-nuance-color)}
 .thing-name {
   grid-area: name;
 }
@@ -154,6 +163,11 @@ footer {
 }
 .thing-state {
   grid-area: state;
+}
+.thing-progress-percent {
+  font-size: 8px;
+  padding: 0px;
+  margin: 0px;
 }
 
 

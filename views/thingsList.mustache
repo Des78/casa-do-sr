@@ -1,12 +1,13 @@
-<ul>
+<div class="group-things-flex-container">
 {{#things}}
-<li>
   <span class="thing-container">
-    <span class="thing-name" title="{{name}} {{_state}}">{{label}}</span>
+    <span class="thing-name" title="{{name}} {{_state}}">
+      {{label}}
+      <span class="thing-progress-percent">{{#isProgressive}}{{progressPercent}}{{/isProgressive}}</span>
+    </span>
     <span class="thing-type">{{#showTypeHeader}}{{_type}}{{/showTypeHeader}}</span>
     <span class="thing-group">{{#showGroupHeader}}{{group}}{{/showGroupHeader}}</span>
     <span class="thing-state">{{> thingStateControl}}</span>
   </span>
-</li>
 {{/things}}
-</ul>
+</div>

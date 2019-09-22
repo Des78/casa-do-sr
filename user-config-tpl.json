@@ -3,7 +3,7 @@
   "iftttMakerUrl": "https://maker.ifttt.com/use/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "locationLat": 41,
   "locationLon": -7,
-  "GmtOffset": 0,
+    "GmtOffset": 0,
   "DaylightSavings": 1,
   "things": [
     { "name": "Plug01", "label": "Light", "group": "Office 1", "iftttConnected":true, "_type": "ToogleThing" },
@@ -28,7 +28,7 @@
     { "name": "masterHome", "label": "masterAtHome", "group": "Variables", "variableType": "boolean", "state": true, "_type": "VariableThing" },
     { "name": "masterAwake", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
     { "name": "wifeAwake", "label": "mwifeAwake", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
-    { "name": "windowsOpen", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
+    { "name": "openWindows", "group": "Variables", "variableType": "boolean", "_type": "VariableThing" },
     { "name": "temperatureMode", "group": "Variables", "variableType": "string", "state": "spring", "_type": "VariableThing" },
     { "name": "outsideTempMin", "group": "Variables", "variableType": "number", "state": 0, "_type": "VariableThing" },
     { "name": "outsideTempMax", "group": "Variables", "variableType": "number", "_type": "VariableThing" },
