@@ -23,8 +23,11 @@ module.exports = class SunriseFlow extends Workflow {
       // TODO: Get sunrise time at user location to determine if it's daytime
       let isAfterSunrise = true;
 
-      // trigger only if sunrise is after 8am
-      res = (eventName === sunriseEvent && userLocalHour > 8);
+      // trigger only if sunrise is after 8am 
+      res = (eventName === sunriseEvent && userLocalHour >= 8);
+      
+      //TODO: currently sunriseEvent is triggered from IFTTT as runOnDemandEvent; needs to be changes to internal astro trigger or  pass the event name from IFTTT
+      res = res || (eventName === runOnDemandEvent && userLocalHour >= 8);
 
       // trigger after 8am, only if sunrise already happened
       res = res || (eventName === minTimeEvent && isAfterSunrise);
