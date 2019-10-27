@@ -36,8 +36,17 @@ exports.isDst = () => {
     let isDs = now.getTimezoneOffset() < Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset())
 
     if (jan.getTimezoneOffset() == jul.getTimezoneOffset()) {
-        // server doesn't have DST, make a guess
-        isDs = (now.getMonth() > 3 && now.getMonth() < 11);
+        // server doesn't have DST, make a guess (using European DST rules)
+        //   from https://stackoverflow.com/questions/5590429/calculating-daylight-saving-time-from-only-date
+        let month = now.getMonth() + 1;  // getMonth number is 0-based
+        let previousSunday = now.getDate() - now.getDay();
+
+        isDs = (month > 3 && month < 10);
+
+        if (month == 3)
+            isDs = (previousSunday >= 25);
+        else if (month == 10)
+            isDs = (previousSunday < 25);
     }
     
     return isDs;
