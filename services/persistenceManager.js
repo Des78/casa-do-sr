@@ -217,6 +217,8 @@ class PersistenceManager {
             wfInstances.push(new SunsetFlow({'name': 'SunsetFlow'}, userKey));
             const EveningFlow = require('../workflows/EveningFlow');
             wfInstances.push(new EveningFlow({'name': 'EveningFlow'}, userKey));
+            const WakeOnLan = require('../workflows/WakeOnLan');
+            wfInstances.push(new WakeOnLan({'name': 'WakeOnLan'}, userKey));
 
             const HeartbeatFlow = require('../workflows/HeartbeatFlow');
             wfInstances.push(new HeartbeatFlow({'name': 'HeartbeatFlow'}, userKey));
