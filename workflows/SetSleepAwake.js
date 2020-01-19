@@ -4,7 +4,7 @@ var Workflow = require('./Workflow');
 const shutterOpenEvent = "state:ShutterBedroom-_-inc_on";
 const shutterCloseEvent = "state:ShutterBedroom-_-dec_on";
 const awakeTimeEvent = "timeDst:1230";
-const asleepTimeEvent = "timeDst:0530";
+const asleepTimeEvent = "timeDst:0400";
 
 module.exports = class SetSleepAwake extends Workflow {
 
@@ -68,6 +68,8 @@ module.exports = class SetSleepAwake extends Workflow {
               await util.delay(2000);
               await this.changeThingStateIfttt("Plug01", "on");
             }
+
+            this.changeThingState("MainPc", "on");
           }
 
           if (!iswifeAwake && (isMasterAwake || eventName === shutterOpenEvent)) 
@@ -93,6 +95,7 @@ module.exports = class SetSleepAwake extends Workflow {
         if (eventName === shutterCloseEvent)
           await this.changeThingStateIfttt("ShutterBedroom-_-dec", "off");
         await this.changeThingStateIfttt("LightLivRoomFloor-_-channel 1", "off");
+        this.changeThingState("MainPc", "off");
       }
 
     } catch (error) {

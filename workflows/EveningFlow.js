@@ -23,7 +23,7 @@ module.exports = class EveningFlow extends Workflow {
       await util.delay(10000);
       await this.changeIftttProgThingToTarget("ShutterOffice02", ((temperatureMode === "winter")? 0: (temperatureMode === "summer")? 0.66: 0));
       await util.delay(1000);
-      await this.changeIftttProgThingToTarget("ShutterKitchenWindow", ((temperatureMode === "winter")? 1: 0.33));
+      await this.changeIftttProgThingToTarget("ShutterKitchenWindow", ((temperatureMode === "winter")? 0: 0.33));
       await util.delay(1000);
       await this.changeIftttProgThingToTarget("ShutterKitchenDoor", ((temperatureMode === "winter")? 0: 0.20));
       await util.delay(1000);

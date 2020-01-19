@@ -1,6 +1,6 @@
 var Workflow = require('./Workflow');
 
-const sunshiftEvent = "timeDst:0815"; //"astro:azimuth=120" (but not before sunrise flow)
+const sunshiftEvent = "timeDst:0845"; //"astro:azimuth=120" (but not before sunrise flow)
 
 
 module.exports = class SunshiftFlow extends Workflow {
@@ -43,11 +43,12 @@ module.exports = class SunshiftFlow extends Workflow {
 
       // azimuth 140 (20-25min after) - sun shines on kitchen door
       await util.delay(20*60*1000);
-      await this.changeIftttProgThingToTarget("ShutterKitchenDoor", ((temperatureMode === "winter")? 0.5: (temperatureMode === "summer")? 0: 0.5));
+      await this.changeIftttProgThingToTarget("ShutterKitchenDoor", ((temperatureMode === "winter")? 0.66: (temperatureMode === "summer")? 0: 0.5));
 
-      // azimuth 240 (3h after) - in summer, sun lowers and shines on living room
+      // azimuth 240 (3-6h after) - sun stops shining on kitchen door; in summer, sun lowers and shines on living room
+      await util.delay(3*60*60*1000);
+      await this.changeIftttProgThingToTarget("ShutterKitchenDoor", 0.5);
       if (temperatureMode === "summer") {
-        await util.delay(3*60*60*1000);
         await this.changeIftttProgThingToTarget("ShutterLivingRoom", 0);
       }
 
