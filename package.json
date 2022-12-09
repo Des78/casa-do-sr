@@ -15,7 +15,7 @@
     "depd": "^1.1.2",
     "dotenv": "^4.0.0",
     "dropbox": "^2.5.13",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-ws": "^4.0.0",
     "extend": "^3.0.2",
     "form-data": "^2.3.3",
